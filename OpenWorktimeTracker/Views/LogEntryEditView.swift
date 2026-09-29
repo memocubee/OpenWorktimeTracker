@@ -266,10 +266,12 @@ struct LogEntryEditView: View {
                     label: String(localized: "logEditor.grossTime"),
                     value: gross.hoursMinutesFormatted
                 )
-                computedItem(
-                    label: String(localized: "logEditor.autoBreak"),
-                    value: autoBrk.hoursMinutesFormatted
-                )
+                if autoBrk > 0 {
+                    computedItem(
+                        label: String(localized: "logEditor.autoBreak"),
+                        value: autoBrk.hoursMinutesFormatted
+                    )
+                }
                 computedItem(
                     label: String(localized: "logEditor.netTime"),
                     value: net.hoursMinutesFormatted

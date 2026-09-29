@@ -11,10 +11,6 @@ struct SettingsView: View {
         .redThresholdHours
 
     // ArbZG Breaks
-    @AppStorage(AppSettingsKey.breakAfter6hMinutes) private var break6h = AppDefaults
-        .breakAfter6hMinutes
-    @AppStorage(AppSettingsKey.breakAfter9hMinutes) private var break9h = AppDefaults
-        .breakAfter9hMinutes
 
     // Notifications
     @AppStorage(AppSettingsKey.notificationsEnabled) private var notificationsEnabled = AppDefaults
@@ -89,35 +85,6 @@ struct SettingsView: View {
                             redThreshold = max(0.5, newValue)
                             if redThreshold <= orangeThreshold {
                                 orangeThreshold = redThreshold - 0.5
-                            }
-                        }
-                }
-            }
-
-            Section(String(localized: "settings.autoBreak")) {
-                HStack {
-                    Text("settings.breakAfter6h")
-                    Spacer()
-                    TextField("settings.breakAfter6h", value: $break6h, format: .number)
-                        .labelsHidden()
-                        .frame(width: 60)
-                        .multilineTextAlignment(.trailing)
-                        .onChange(of: break6h) { _, newValue in
-                            break6h = max(0, min(300, newValue))
-                            break9h = max(break9h, break6h)
-                        }
-                }
-                HStack {
-                    Text("settings.breakAfter9h")
-                    Spacer()
-                    TextField("settings.breakAfter9h", value: $break9h, format: .number)
-                        .labelsHidden()
-                        .frame(width: 60)
-                        .multilineTextAlignment(.trailing)
-                        .onChange(of: break9h) { _, newValue in
-                            break9h = max(0, min(300, newValue))
-                            if break9h < break6h {
-                                break9h = break6h
                             }
                         }
                 }
