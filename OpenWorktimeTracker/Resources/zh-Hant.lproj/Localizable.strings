@@ -62,6 +62,21 @@
 "summary.overtime" = "超時";
 "summary.period" = "統計期間";
 
+/* WorkHeatmapView */
+"heatmap.title" = "近 6 個月";
+"heatmap.workedDays" = "上班天數";
+"heatmap.overtimeDays" = "超時天數";
+"heatmap.average" = "平均每天";
+"heatmap.days" = "%ld 天";
+"heatmap.hours" = "%@ 小時";
+"heatmap.tooltip.date" = "%1$@（%2$@）";
+"heatmap.tooltip" = "%1$@ %2$@–%3$@・淨工時 %4$@ 小時";
+"heatmap.tooltip.empty" = "%@・沒有上班";
+"heatmap.running" = "進行中";
+"heatmap.legend.upTo" = "≤%@h";
+"heatmap.legend.between" = "%1$@–%2$@h";
+"heatmap.legend.above" = ">%@h";
+
 /* IdlePromptView */
 "idle.newWorkday" = "新的一天！";
 "idle.inactivityDetected" = "你離開電腦一陣子了";

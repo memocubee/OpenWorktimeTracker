@@ -62,6 +62,21 @@
 "summary.overtime" = "Überstunden";
 "summary.period" = "Auswertungszeitraum";
 
+/* WorkHeatmapView */
+"heatmap.title" = "LETZTE 6 MONATE";
+"heatmap.workedDays" = "Arbeitstage";
+"heatmap.overtimeDays" = "Überstundentage";
+"heatmap.average" = "Ø pro Tag";
+"heatmap.days" = "%ld Tage";
+"heatmap.hours" = "%@ Std.";
+"heatmap.tooltip.date" = "%2$@, %1$@";
+"heatmap.tooltip" = "%1$@ · %2$@–%3$@ · %4$@ Std. netto";
+"heatmap.tooltip.empty" = "%@ · Nicht gearbeitet";
+"heatmap.running" = "jetzt";
+"heatmap.legend.upTo" = "≤%@h";
+"heatmap.legend.between" = "%1$@–%2$@h";
+"heatmap.legend.above" = ">%@h";
+
 /* IdlePromptView */
 "idle.newWorkday" = "Neuer Arbeitstag!";
 "idle.inactivityDetected" = "Inaktivität erkannt";

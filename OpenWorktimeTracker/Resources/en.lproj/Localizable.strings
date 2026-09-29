@@ -62,6 +62,21 @@
 "summary.overtime" = "Overtime";
 "summary.period" = "Summary period";
 
+/* WorkHeatmapView */
+"heatmap.title" = "LAST 6 MONTHS";
+"heatmap.workedDays" = "Days Worked";
+"heatmap.overtimeDays" = "Overtime Days";
+"heatmap.average" = "Avg per Day";
+"heatmap.days" = "%ld days";
+"heatmap.hours" = "%@ h";
+"heatmap.tooltip.date" = "%2$@, %1$@";
+"heatmap.tooltip" = "%1$@ · %2$@–%3$@ · %4$@ h net";
+"heatmap.tooltip.empty" = "%@ · No work";
+"heatmap.running" = "now";
+"heatmap.legend.upTo" = "≤%@h";
+"heatmap.legend.between" = "%1$@–%2$@h";
+"heatmap.legend.above" = ">%@h";
+
 /* IdlePromptView */
 "idle.newWorkday" = "New Workday!";
 "idle.inactivityDetected" = "Inactivity Detected";

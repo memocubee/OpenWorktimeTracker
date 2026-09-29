@@ -78,6 +78,9 @@ final class WorkdayManager {
         Workday(payload: entry, defaults: defaults)
     }
 
+    /// Where the work heatmap changes colour, from the same settings.
+    var heatScale: HeatScale { .resolved(from: defaults) }
+
     private var timer: Timer?
     private var lastSaveTime: Date?
     private var hasBootstrapped = false
