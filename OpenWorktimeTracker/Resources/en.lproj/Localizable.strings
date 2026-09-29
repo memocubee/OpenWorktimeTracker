@@ -176,3 +176,4 @@
 "logEditor.error.invalidTimes" = "Check the start, end and pause times.";
 "logEditor.error.saveFailed" = "The entry could not be saved locally. Your edits are still available. Check the log folder and try again.";
 "logEditor.error.deleteFailed" = "The entry could not be deleted. Tracking is unchanged. Check the log folder and try again.";
+"settings.manualPunch" = "Manual clock-in (start the day with the Start button)";

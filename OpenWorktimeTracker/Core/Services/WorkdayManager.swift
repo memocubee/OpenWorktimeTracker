@@ -172,17 +172,42 @@ final class WorkdayManager {
             activate(workday(for: entry))
 
         case .startFreshDay:
-            startNewDay()
+            if isManualPunchMode {
+                resetToNotStarted()
+            } else {
+                startNewDay()
+            }
 
         case .endPreviousAndStartNew(let previous, let suggestedEnd):
             // Auto-end the previous day and start new. `ended(at:)` closes any
             // Pause that was still open so the Net Work Time stays correct.
             store.save(workday(for: previous).ended(at: suggestedEnd).payload)
-            startNewDay()
+            if isManualPunchMode {
+                resetToNotStarted()
+            } else {
+                startNewDay()
+            }
 
         case .dayAlreadyEnded(let entry):
             activate(workday(for: entry))
         }
+    }
+
+    /// Fork: in manual punch mode the day waits for the user's Start click.
+    private var isManualPunchMode: Bool {
+        defaults.object(forKey: AppSettingsKey.manualPunchMode) as? Bool
+            ?? AppDefaults.manualPunchMode
+    }
+
+    private func resetToNotStarted() {
+        guard state != .notStarted || currentWorkday != nil else { return }
+        currentWorkday = nil
+        state = .notStarted
+        stopTimer()
+        idleDetector.stopMonitoring()
+        updateComputedValues()
+        logRevision += 1
+        WidgetCenter.shared.reloadAllTimelines()
     }
 
     // MARK: - Actions

@@ -176,3 +176,4 @@
 "logEditor.error.invalidTimes" = "Bitte prüfen Sie die Start-, End- und Pausenzeiten.";
 "logEditor.error.saveFailed" = "Der Eintrag konnte nicht lokal gespeichert werden. Ihre Änderungen bleiben im Editor erhalten. Prüfen Sie den Protokollordner und versuchen Sie es erneut.";
 "logEditor.error.deleteFailed" = "Der Eintrag konnte nicht gelöscht werden. Die Zeiterfassung bleibt unverändert. Prüfen Sie den Protokollordner und versuchen Sie es erneut.";
+"settings.manualPunch" = "Manuell einstempeln (Tag per Start-Taste beginnen)";

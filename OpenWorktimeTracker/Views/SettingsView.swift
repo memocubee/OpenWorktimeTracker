@@ -31,6 +31,8 @@ struct SettingsView: View {
         .idleThresholdMinutes
 
     // Startup
+    @AppStorage(AppSettingsKey.manualPunchMode) private var manualPunchMode = AppDefaults
+        .manualPunchMode
     @State private var launchAtLogin = AppDelegate.isLaunchAtLoginEnabled
 
     // Cloud
@@ -136,6 +138,7 @@ struct SettingsView: View {
             }
 
             Section(String(localized: "settings.startup")) {
+                Toggle(String(localized: "settings.manualPunch"), isOn: $manualPunchMode)
                 Toggle(String(localized: "settings.launchAtLogin"), isOn: $launchAtLogin)
                     .onChange(of: launchAtLogin) { _, newValue in
                         AppDelegate.setLaunchAtLogin(newValue)

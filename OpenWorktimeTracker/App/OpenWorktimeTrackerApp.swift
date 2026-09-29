@@ -5,6 +5,9 @@ enum OpenWorktimeTrackerApp {
     @MainActor
     static func main() {
         let app = NSApplication.shared
+        if ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] == nil {
+            ForkDefaults.register()
+        }
         let delegate = AppDelegate()
         let manager = WorkdayManager()
         delegate.workdayManager = manager

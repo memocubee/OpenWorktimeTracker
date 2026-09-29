@@ -9,6 +9,7 @@ options:
   knownRegions:
     - en
     - de
+    - zh-Hant
   defaultLocalization: en
 
 packages:
