@@ -10,7 +10,6 @@ struct SettingsView: View {
     @AppStorage(AppSettingsKey.redThresholdHours) private var redThreshold = AppDefaults
         .redThresholdHours
 
-    // ArbZG Breaks
 
     // Notifications
     @AppStorage(AppSettingsKey.notificationsEnabled) private var notificationsEnabled = AppDefaults
