@@ -1,0 +1,76 @@
+name: Personal Build (zh-Hant, unsigned)
+
+# Fork build: no Apple Developer ID, so the app is ad-hoc signed and published
+# as a GitHub release. Tag with `zh-v<version>` to build.
+on:
+  push:
+    tags:
+      - 'zh-v*'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+env:
+  APP_NAME: OpenWorktimeTracker
+
+jobs:
+  build:
+    runs-on: macos-15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Select Xcode
+        run: sudo xcode-select -s /Applications/Xcode_16.0.app/Contents/Developer
+
+      - name: Install tools
+        run: brew install xcodegen
+
+      - name: Generate Xcode Project
+        run: xcodegen generate
+
+      - name: Build Release
+        run: |
+          xcodebuild build \
+            -project $APP_NAME.xcodeproj \
+            -scheme $APP_NAME \
+            -configuration Release \
+            -derivedDataPath build \
+            -destination 'platform=macOS' \
+            CODE_SIGN_IDENTITY="-" \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGNING_ALLOWED=NO
+
+      - name: Ad-hoc sign
+        run: |
+          APP_PATH="build/Build/Products/Release/$APP_NAME.app"
+          codesign --force --deep --sign - "$APP_PATH"
+          codesign --verify --deep --strict "$APP_PATH"
+          ls "$APP_PATH/Contents/Resources" | grep lproj
+
+      - name: Create DMG
+        run: |
+          VERSION="${GITHUB_REF_NAME#zh-v}"
+          [ "$GITHUB_REF_TYPE" = "tag" ] || VERSION="dev-${GITHUB_SHA::7}"
+          DMG_PATH="build/$APP_NAME-zh-$VERSION.dmg"
+          hdiutil create -volname "$APP_NAME" \
+            -srcfolder "build/Build/Products/Release/$APP_NAME.app" \
+            -ov -format UDZO "$DMG_PATH"
+          echo "DMG_PATH=$DMG_PATH" >> "$GITHUB_ENV"
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dmg
+          path: ${{ env.DMG_PATH }}
+
+      - name: Publish release
+        if: github.ref_type == 'tag'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" "$DMG_PATH" \
+            --repo "$GITHUB_REPOSITORY" \
+            --title "繁體中文＋手動打卡版 $GITHUB_REF_NAME" \
+            --notes "個人改版：繁體中文介面、手動打卡、關閉自動更新。未經 Apple 公證，第一次打開需在系統設定按「仍要打開」。"
