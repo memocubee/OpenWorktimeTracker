@@ -145,7 +145,6 @@ struct MenuBarView: View {
                 ) {
                     manager.resume()
                 }
-                ResumeAtButton()
             } else if manager.state == .ended {
                 ActionButton(
                     title: String(localized: "menubar.restart"), icon: "arrow.counterclockwise",

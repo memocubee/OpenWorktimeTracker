@@ -12,7 +12,6 @@ struct LogEntryEditView: View {
     @State private var editedPauseMinutes: Int
     @State private var editedNote: String
     @State private var editedIdleDecisions: [IdleDecision]
-    @State private var editedPauses: [PauseInterval]
     @State private var showDeleteConfirmation = false
 
     init(
@@ -33,7 +32,6 @@ struct LogEntryEditView: View {
         self._editedPauseMinutes = State(initialValue: (Int(wrapped.manualPauseSeconds) % 3600) / 60)
         self._editedNote = State(initialValue: wrapped.note)
         self._editedIdleDecisions = State(initialValue: wrapped.idleDecisions)
-        self._editedPauses = State(initialValue: wrapped.pauses)
     }
 
     var body: some View {
@@ -57,11 +55,7 @@ struct LogEntryEditView: View {
         }
         .safeAreaInset(edge: .bottom, spacing: 0) {
             VStack(alignment: .leading, spacing: DesignTokens.Spacing.sm) {
-                if let pauseError = pauseValidationError {
-                    Label(pauseError.localizedDescription, systemImage: "exclamationmark.triangle")
-                        .font(DesignTokens.Typography.bodySmall)
-                        .foregroundStyle(DesignTokens.Colors.accentRed)
-                } else if !isValid {
+                if !isValid {
                     Label("logEditor.error.invalidTimes", systemImage: "exclamationmark.triangle")
                         .font(DesignTokens.Typography.bodySmall)
                         .foregroundStyle(DesignTokens.Colors.accentRed)
@@ -156,15 +150,32 @@ struct LogEntryEditView: View {
     // MARK: - Pause
 
     private var pauseSection: some View {
-        LogPauseSection(
-            entry: entry,
-            dayStart: editedStart,
-            dayEnd: entry.endTime != nil ? editedEnd : nil,
-            validationError: pauseValidationError,
-            pauses: $editedPauses,
-            legacyHours: $editedPauseHours,
-            legacyMinutes: $editedPauseMinutes
-        )
+        VStack(alignment: .leading, spacing: 12) {
+            Text(String(localized: "logEditor.manualPause"))
+                .font(.system(size: 12, weight: .bold))
+                .textCase(.uppercase)
+                .foregroundStyle(.secondary)
+
+            HStack(spacing: 16) {
+                HStack(spacing: 4) {
+                    Stepper(value: $editedPauseHours, in: 0...8) {
+                        Text("\(editedPauseHours)h")
+                            .monospacedDigit()
+                            .frame(width: 30, alignment: .trailing)
+                    }
+                    .accessibilityLabel(Text("logEditor.pauseHours"))
+                }
+
+                HStack(spacing: 4) {
+                    Stepper(value: $editedPauseMinutes, in: 0...59) {
+                        Text("\(editedPauseMinutes)m")
+                            .monospacedDigit()
+                            .frame(width: 35, alignment: .trailing)
+                    }
+                    .accessibilityLabel(Text("logEditor.pauseMinutes"))
+                }
+            }
+        }
     }
 
     // MARK: - Idle Decisions
@@ -324,7 +335,6 @@ struct LogEntryEditView: View {
             || editedPauseHours != Int(entry.manualPauseSeconds) / 3600
             || editedPauseMinutes != (Int(entry.manualPauseSeconds) % 3600) / 60
             || editedNote != entry.note
-            || editedPauses != entry.pauses
             || editedIdleDecisions.contains { edited in
                 entry.idleDecisions.first(where: { $0.id == edited.id })?.decision != edited.decision
             }
@@ -332,10 +342,6 @@ struct LogEntryEditView: View {
 
     private var isValid: Bool {
         manager.hasValidLogTimes(buildPreviewEntry())
-    }
-
-    private var pauseValidationError: PauseEditError? {
-        buildPreviewEntry().pauseValidationError(now: Date())
     }
 
     private var weekdayString: String {
@@ -359,8 +365,6 @@ struct LogEntryEditView: View {
             preview.manualPauseSeconds = TimeInterval(editedPauseHours * 3600 + editedPauseMinutes * 60)
         }
         preview.idleDecisions = editedIdleDecisions
-        preview.pauses = editedPauses
-        preview.snapPausesIntoWorkday(now: Date())
         return preview
     }
 
@@ -379,6 +383,5 @@ struct LogEntryEditView: View {
         editedPauseMinutes = (Int(entry.manualPauseSeconds) % 3600) / 60
         editedNote = entry.note
         editedIdleDecisions = entry.idleDecisions
-        editedPauses = entry.pauses
     }
 }

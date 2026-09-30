@@ -91,14 +91,12 @@ struct MetricCardsView: View {
                 .foregroundStyle(DesignTokens.Colors.onSurfaceVariant)
                 .help(Text("metric.autoBreak.help"))
             }
-
-            PauseListView()
         }
         .popover(isPresented: $isEditingStart, arrowEdge: .bottom) {
             timeEditor(
                 title: String(localized: "metric.editStartTime"),
                 date: $editedStartTime,
-                range: Date.distantPast...latestAllowedStart
+                range: Date.distantPast...(manager.currentEntry?.endTime ?? Date())
             ) {
                 manager.updateStartTime(editedStartTime)
                 isEditingStart = false
@@ -108,24 +106,12 @@ struct MetricCardsView: View {
             timeEditor(
                 title: String(localized: "metric.editEndTime"),
                 date: $editedEndTime,
-                range: earliestAllowedEnd...Date.distantFuture
+                range: (manager.currentEntry?.startTime ?? Date())...Date.distantFuture
             ) {
                 manager.updateEndTime(editedEndTime)
                 isEditingEnd = false
             }
         }
-    }
-
-    /// The day can't start after its first break, nor end before its last.
-    private var latestAllowedStart: Date {
-        let upper = manager.currentEntry?.endTime ?? Date()
-        return min(upper, manager.currentEntry?.pauses.map(\.start).min() ?? upper)
-    }
-
-    private var earliestAllowedEnd: Date {
-        let start = manager.currentEntry?.startTime ?? Date()
-        let lastBreakEnd = manager.currentEntry?.pauses.compactMap(\.end).max() ?? start
-        return max(start, lastBreakEnd)
     }
 
     private func timeEditor(

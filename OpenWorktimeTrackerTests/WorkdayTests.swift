@@ -260,17 +260,14 @@ final class WorkdayTests: XCTestCase {
 
         XCTAssertEqual(ended.status, .ended)
         XCTAssertNil(ended.payload.pauseStartedAt)
-        XCTAssertEqual(ended.manualPause, 3600, accuracy: 0.5)
-        XCTAssertEqual(ended.payload.pauses.count, 1)
-        XCTAssertEqual(ended.payload.pauses.first?.end, epoch.addingTimeInterval(3 * 3600))
+        XCTAssertEqual(ended.payload.manualPauseSeconds, 3600, accuracy: 0.5)
     }
 
     func testEndingBeforeAnOpenPauseStartedDoesNotSubtractPause() {
         let paused = runningWorkday().paused(at: epoch.addingTimeInterval(4 * 3600))
         let ended = paused.ended(at: epoch.addingTimeInterval(1 * 3600))
 
-        XCTAssertEqual(ended.manualPause, 0, accuracy: 0.5)
-        XCTAssertTrue(ended.payload.pauses.isEmpty)
+        XCTAssertEqual(ended.payload.manualPauseSeconds, 0, accuracy: 0.5)
     }
 
     func testEndingAnEndedWorkdayDoesNotOverwriteItsEnd() {
@@ -311,7 +308,7 @@ final class WorkdayTests: XCTestCase {
 
         XCTAssertEqual(resumed.status, .running)
         XCTAssertNil(resumed.payload.pauseStartedAt)
-        XCTAssertEqual(resumed.manualPause(endingAt: epoch.addingTimeInterval(3 * 3600)), 3600, accuracy: 0.5)
+        XCTAssertEqual(resumed.payload.manualPauseSeconds, 3600, accuracy: 0.5)
     }
 
     func testTransitionsKeepConfiguration() {
