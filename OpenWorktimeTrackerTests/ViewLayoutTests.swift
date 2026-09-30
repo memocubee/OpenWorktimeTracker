@@ -232,6 +232,22 @@ final class ViewLayoutTests: XCTestCase {
     }
 
     @MainActor
+    func testPauseTotalEditorFitsItsPopover() throws {
+        let manager = WorkdayManager(store: InMemoryDailyLogStore())
+        manager.startNewDay()
+        manager.updateStartTime(Date().addingTimeInterval(-4 * 3600))
+        for paused in [false, true] {
+            if paused { manager.pause() }
+            for language in ["de", "en", "zh-Hant"] {
+                try assertLayout(
+                    PauseTotalEditor(initialTotal: 30 * 60, onClose: {}).environment(manager),
+                    name: "pause-total-\(language)-\(paused)", language: language, dark: false,
+                    bounds: CGSize(width: 260, height: 320))
+            }
+        }
+    }
+
+    @MainActor
     func testLogEditorFitsNarrowDetailColumn() throws {
         let manager = WorkdayManager(store: InMemoryDailyLogStore())
         var entry = TimeEntry(startTime: Date(timeIntervalSince1970: 1_700_000_000))

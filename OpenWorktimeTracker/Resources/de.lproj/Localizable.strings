@@ -45,6 +45,19 @@
 "metric.editEndTime" = "Endzeit bearbeiten";
 "metric.cancel" = "Abbrechen";
 "metric.save" = "Speichern";
+"metric.editPause" = "Pausenzeit bearbeiten";
+
+/* Pause total editor */
+"pauseTotal.label" = "Pause heute gesamt";
+"pauseTotal.hours" = "Std.";
+"pauseTotal.minutes" = "Min.";
+"pauseTotal.ok" = "OK";
+"pauseTotal.pausedHint" = "Du machst gerade Pause. Setze zuerst die Arbeit fort und bearbeite dann die Summe.";
+"pauseTotal.idleNote" = "Davon sind %@ Abwesenheit, als Pause gewertet; das änderst du im Arbeitszeit-Protokoll.";
+"pauseTotal.error.belowIdle" = "Mindestens %@ (als Pause gewertete Abwesenheit).";
+"pauseTotal.error.exceedsGross" = "Darf nicht mehr als die Bruttozeit von %@ sein.";
+"pauseTotal.error.noWorkday" = "Heute wurde noch kein Arbeitstag gestartet.";
+"pauseTotal.error.saveFailed" = "Speichern fehlgeschlagen. Prüfe den Protokollordner und versuche es erneut.";
 
 /* WeekHistoryView */
 "history.last7days" = "LETZTE 7 TAGE";

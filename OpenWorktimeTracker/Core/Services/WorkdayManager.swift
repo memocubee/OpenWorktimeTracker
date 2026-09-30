@@ -41,8 +41,8 @@ final class WorkdayManager {
     let idleDetector: IdleDetector
     private let notifications: WorkdayNotificationSending
     private let defaults: UserDefaults
-    private let clock: Clock
-    private let store: DailyLogStore
+    let clock: Clock
+    let store: DailyLogStore
     private let prompts: WorkdayPromptPresenting
     private let widgetStore: SharedDefaults
 
@@ -273,7 +273,7 @@ final class WorkdayManager {
         activate(restarted)
     }
 
-    private func activate(_ workday: Workday) {
+    func activate(_ workday: Workday) {
         currentWorkday = workday
         state = WorkdayState(workday.status)
         startTimer()

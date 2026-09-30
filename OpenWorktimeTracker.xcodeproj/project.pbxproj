@@ -16,6 +16,7 @@
 		1B216F8F5496AF19EAA77D46 /* WorkHeatmapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F4732C544320EFB42C2391A /* WorkHeatmapTests.swift */; };
 		1DC0909035DD8290A96FE10F /* GlassContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8CBF6F9629F77799CD434AF /* GlassContainer.swift */; };
 		1E239897EB901FE3D915E1D7 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5AFAE89712EB3B674570A28B /* Localizable.strings */; };
+		1E282754E7F0BFF843864CA8 /* WorkdayManager+TotalPause.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5025345A2E1DDB11255BC422 /* WorkdayManager+TotalPause.swift */; };
 		236FF7EC60B08C2E4B0C9969 /* IdlePromptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96BF05DC18B804752127B67 /* IdlePromptView.swift */; };
 		253CF5BCF181B9CD0DF0734F /* TimeEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96852475F3CF42C080C27424 /* TimeEntry.swift */; };
 		284E1A904867E722FC4129EA /* Clock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 889ACF5AC45EDAC1DD0F8BF8 /* Clock.swift */; };
@@ -48,6 +49,7 @@
 		69090567F259E4622736AE2A /* NotificationThresholds.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60165E8E14DF555642684AB7 /* NotificationThresholds.swift */; };
 		6B04E7D7384A3DC2FD19B4BF /* Color+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ED914F58E92DF73CF1547A3 /* Color+Extensions.swift */; };
 		7110D8AB3463251F8307631E /* CloudSyncManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86E9F0E6F30AAE618BE4982D /* CloudSyncManager.swift */; };
+		7137069CBF72F06519C5AF27 /* PauseTotalEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB1894A4C5F1BE105CCA9AAE /* PauseTotalEditor.swift */; };
 		75653E72BEF543D3BB31CE37 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3636564F038D5714D3F2E9D /* AppSettings.swift */; };
 		775FBCFE7BCEEEACE8CD0C92 /* SharedDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFCA465B8ABE2B90B1C03DF6 /* SharedDefaults.swift */; };
 		7A4B038D2A8FCAF7D3990342 /* IdlePeriod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15F818FB696E0038F88C3B05 /* IdlePeriod.swift */; };
@@ -78,6 +80,7 @@
 		D0BA8C03FE5E382A0104E788 /* WorkdayDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB71FDA60A573DB4F2C4E3D6 /* WorkdayDetector.swift */; };
 		D0C5E94C8A43326CE27D71E0 /* LogEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78CD4A8501FEDAAE565AEAC8 /* LogEditorView.swift */; };
 		D863CFEDBAC6400A74C1551F /* AppIcon.svg in Resources */ = {isa = PBXBuildFile; fileRef = 8CF945626AE912CB62BC84CD /* AppIcon.svg */; };
+		E0443815B9C168D11602B14F /* WorkdayManagerTotalPauseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BA00229D1AC352A6804A4B6 /* WorkdayManagerTotalPauseTests.swift */; };
 		E2776F062926941396F6798E /* DailyLogFormatTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0534E968BFC7EE74714A15B /* DailyLogFormatTests.swift */; };
 		E7DB5A1B699217F6B7749C2E /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC7D8E211502FB3F2B407C29 /* SettingsView.swift */; };
 		EC00E2796568DA67817EE450 /* ThresholdLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54E2CD75761D381C44EA86DA /* ThresholdLevel.swift */; };
@@ -132,6 +135,7 @@
 		15F818FB696E0038F88C3B05 /* IdlePeriod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdlePeriod.swift; sourceTree = "<group>"; };
 		1ED914F58E92DF73CF1547A3 /* Color+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extensions.swift"; sourceTree = "<group>"; };
 		234A384CE4770836D7D1485C /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		2BA00229D1AC352A6804A4B6 /* WorkdayManagerTotalPauseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkdayManagerTotalPauseTests.swift; sourceTree = "<group>"; };
 		2BE8B1A4B3C062AB86A0362C /* ViewLayoutTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewLayoutTests.swift; sourceTree = "<group>"; };
 		2F26F3D087AB990B78FB7094 /* PersistenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceManager.swift; sourceTree = "<group>"; };
 		33B9F7CAAC70B234FABD39A1 /* WidgetSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetSnapshotTests.swift; sourceTree = "<group>"; };
@@ -139,6 +143,7 @@
 		45F2ACA48F78D1F82D64377D /* WorkdayManagerNotificationThresholdTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkdayManagerNotificationThresholdTests.swift; sourceTree = "<group>"; };
 		47E5CA659F0918F09E3A2B2E /* WorkdayManagerClockAndStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkdayManagerClockAndStoreTests.swift; sourceTree = "<group>"; };
 		4AA9BCF5F1EEE511993757D7 /* ManualClock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManualClock.swift; sourceTree = "<group>"; };
+		5025345A2E1DDB11255BC422 /* WorkdayManager+TotalPause.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WorkdayManager+TotalPause.swift"; sourceTree = "<group>"; };
 		5202C6AD0AF52C2D73DC6E17 /* SummaryStatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryStatsView.swift; sourceTree = "<group>"; };
 		5351C1EB6221F54A7FC64A02 /* LogEntryEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogEntryEditView.swift; sourceTree = "<group>"; };
 		54E2CD75761D381C44EA86DA /* ThresholdLevel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThresholdLevel.swift; sourceTree = "<group>"; };
@@ -185,6 +190,7 @@
 		B5E15771FD124946F98CA29A /* WorkHeatmapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkHeatmapView.swift; sourceTree = "<group>"; };
 		B8D9EEEE4131C2BAE686DD5C /* WorktimeWidget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WorktimeWidget.entitlements; sourceTree = "<group>"; };
 		B96BF05DC18B804752127B67 /* IdlePromptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdlePromptView.swift; sourceTree = "<group>"; };
+		BB1894A4C5F1BE105CCA9AAE /* PauseTotalEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PauseTotalEditor.swift; sourceTree = "<group>"; };
 		BC1763B590C81EB59DF0B300 /* ProgressBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressBarView.swift; sourceTree = "<group>"; };
 		BE27F160308976C1903EB127 /* AutoBreakRules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoBreakRules.swift; sourceTree = "<group>"; };
 		BEBF376EB97AAD16E97B1D48 /* WorkdayState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkdayState.swift; sourceTree = "<group>"; };
@@ -307,6 +313,7 @@
 				2F26F3D087AB990B78FB7094 /* PersistenceManager.swift */,
 				CB71FDA60A573DB4F2C4E3D6 /* WorkdayDetector.swift */,
 				8F597F7658C3A59EB200E8F1 /* WorkdayManager.swift */,
+				5025345A2E1DDB11255BC422 /* WorkdayManager+TotalPause.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -335,6 +342,7 @@
 				45F2ACA48F78D1F82D64377D /* WorkdayManagerNotificationThresholdTests.swift */,
 				99AEB2B7772C3768CB0B7B4B /* WorkdayManagerSettingsTests.swift */,
 				C770EF5C2029076BF88AF474 /* WorkdayManagerTests.swift */,
+				2BA00229D1AC352A6804A4B6 /* WorkdayManagerTotalPauseTests.swift */,
 				8D92EF9892D12D3D1DEA3418 /* WorkdayTests.swift */,
 				3F4732C544320EFB42C2391A /* WorkHeatmapTests.swift */,
 			);
@@ -396,6 +404,7 @@
 				7255E8D3611E793FAB71F0AC /* MaxHoursPromptView.swift */,
 				58B2CA010B0A3CBEDC5FA6F9 /* MenuBarView.swift */,
 				A95771E351BA49672B02C68D /* MetricCardsView.swift */,
+				BB1894A4C5F1BE105CCA9AAE /* PauseTotalEditor.swift */,
 				AC7D8E211502FB3F2B407C29 /* SettingsView.swift */,
 				5202C6AD0AF52C2D73DC6E17 /* SummaryStatsView.swift */,
 				0CB576F2CF5F2605464A6FEC /* TimerDisplayView.swift */,
@@ -570,6 +579,7 @@
 				515DC1B69C2BDB10210F82F9 /* WorkdayManagerNotificationThresholdTests.swift in Sources */,
 				4352E3077EFA1D9BDA71E053 /* WorkdayManagerSettingsTests.swift in Sources */,
 				ADE593C4C405609F5F1B3894 /* WorkdayManagerTests.swift in Sources */,
+				E0443815B9C168D11602B14F /* WorkdayManagerTotalPauseTests.swift in Sources */,
 				7D1AA8C747743D0DBCF47233 /* WorkdayTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -605,6 +615,7 @@
 				2C5B028985B015B7A26ECBA7 /* NotificationManager.swift in Sources */,
 				69090567F259E4622736AE2A /* NotificationThresholds.swift in Sources */,
 				AEE1E6715AC00AE314B9D854 /* OpenWorktimeTrackerApp.swift in Sources */,
+				7137069CBF72F06519C5AF27 /* PauseTotalEditor.swift in Sources */,
 				F9CEAFEDD47DBEF79E904301 /* PersistenceManager.swift in Sources */,
 				A37E2A4BE6EA5DF1F0FBA60B /* ProgressBarView.swift in Sources */,
 				E7DB5A1B699217F6B7749C2E /* SettingsView.swift in Sources */,
@@ -620,6 +631,7 @@
 				CB63BC5DE6E64B89F587BF8D /* Workday.swift in Sources */,
 				3F944373B6FF10C633D2D18C /* WorkdayAppearance.swift in Sources */,
 				D0BA8C03FE5E382A0104E788 /* WorkdayDetector.swift in Sources */,
+				1E282754E7F0BFF843864CA8 /* WorkdayManager+TotalPause.swift in Sources */,
 				9DD01273C074913E95147CA4 /* WorkdayManager.swift in Sources */,
 				9884BB01691FD68AE126CC2E /* WorkdayState.swift in Sources */,
 			);
@@ -691,7 +703,7 @@
 				INFOPLIST_FILE = WorktimeWidget/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @executable_path/../../../../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 0.7.0;
+				MARKETING_VERSION = 0.7.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.openworktimetracker.app.widget;
 				PRODUCT_NAME = WorktimeWidget;
 				SDKROOT = macosx;
@@ -734,7 +746,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 0.7.0;
+				MARKETING_VERSION = 0.7.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.openworktimetracker.app;
 				PRODUCT_NAME = OpenWorktimeTracker;
 				SDKROOT = macosx;
@@ -815,7 +827,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 0.7.0;
+				MARKETING_VERSION = 0.7.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.openworktimetracker.app;
 				PRODUCT_NAME = OpenWorktimeTracker;
 				SDKROOT = macosx;
@@ -853,7 +865,7 @@
 				INFOPLIST_FILE = WorktimeWidget/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @executable_path/../../../../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 0.7.0;
+				MARKETING_VERSION = 0.7.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.openworktimetracker.app.widget;
 				PRODUCT_NAME = WorktimeWidget;
 				SDKROOT = macosx;

@@ -45,6 +45,19 @@
 "metric.editEndTime" = "修改下班時間";
 "metric.cancel" = "取消";
 "metric.save" = "儲存";
+"metric.editPause" = "修改休息時間";
+
+/* Pause total editor */
+"pauseTotal.label" = "今天休息總共";
+"pauseTotal.hours" = "小時";
+"pauseTotal.minutes" = "分鐘";
+"pauseTotal.ok" = "好";
+"pauseTotal.pausedHint" = "現在休息中，按「回來上班」後再改休息總共多久。";
+"pauseTotal.idleNote" = "其中 %@ 是離開電腦算成的休息，要改請到「工時紀錄」。";
+"pauseTotal.error.belowIdle" = "最少要 %@（離開電腦算成的休息）。";
+"pauseTotal.error.exceedsGross" = "不能超過總時長 %@。";
+"pauseTotal.error.noWorkday" = "今天還沒上班打卡。";
+"pauseTotal.error.saveFailed" = "存不進去，檢查紀錄資料夾後再試一次。";
 
 /* WeekHistoryView */
 "history.last7days" = "最近 7 天";

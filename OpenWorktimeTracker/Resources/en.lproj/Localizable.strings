@@ -45,6 +45,19 @@
 "metric.editEndTime" = "Edit End Time";
 "metric.cancel" = "Cancel";
 "metric.save" = "Save";
+"metric.editPause" = "Edit Break Time";
+
+/* Pause total editor */
+"pauseTotal.label" = "Total break today";
+"pauseTotal.hours" = "h";
+"pauseTotal.minutes" = "min";
+"pauseTotal.ok" = "OK";
+"pauseTotal.pausedHint" = "You're on a break right now. Resume work first, then edit the total.";
+"pauseTotal.idleNote" = "%@ of this is away time counted as a break; change that in the Work Time Log.";
+"pauseTotal.error.belowIdle" = "At least %@ (away time counted as a break).";
+"pauseTotal.error.exceedsGross" = "Can't be more than the gross time of %@.";
+"pauseTotal.error.noWorkday" = "No workday started today.";
+"pauseTotal.error.saveFailed" = "Couldn't save. Check the log folder and try again.";
 
 /* WeekHistoryView */
 "history.last7days" = "LAST 7 DAYS";

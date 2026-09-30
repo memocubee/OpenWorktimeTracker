@@ -81,6 +81,13 @@ struct TimeEntry: Codable, Identifiable {
         return total
     }
 
+    // MARK: - Coding
+
+    private enum CodingKeys: String, CodingKey {
+        case id, date, startTime, endTime, status, manualPauseSeconds, pauseStartedAt
+        case idleDecisions, notifiedThresholds, note, lastActivityTime
+    }
+
     private static let dateStringFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
@@ -127,6 +134,51 @@ struct IdleDecision: Codable, Identifiable {
         self.idleStart = idleStart
         self.idleEnd = idleEnd
         self.decision = decision
+    }
+}
+
+// MARK: - Reading Daily Logs written by 0.7.2
+
+/// Version 0.7.2 recorded each Pause as an interval under a `pauses` key. Only
+/// the total is kept now: closed intervals are folded into
+/// `manualPauseSeconds` and an open one becomes `pauseStartedAt`. `pauses` is
+/// never written back, so the next save restores the shipped format.
+extension TimeEntry {
+    private enum V072Keys: String, CodingKey {
+        case pauses
+    }
+
+    private struct V072Pause: Decodable {
+        let start: Date
+        let end: Date?
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.init(
+            id: try container.decode(UUID.self, forKey: .id),
+            date: try container.decode(String.self, forKey: .date),
+            startTime: try container.decode(Date.self, forKey: .startTime),
+            endTime: try container.decodeIfPresent(Date.self, forKey: .endTime),
+            status: try container.decode(Status.self, forKey: .status),
+            manualPauseSeconds: try container.decode(TimeInterval.self, forKey: .manualPauseSeconds),
+            pauseStartedAt: try container.decodeIfPresent(Date.self, forKey: .pauseStartedAt),
+            idleDecisions: try container.decode([IdleDecision].self, forKey: .idleDecisions),
+            notifiedThresholds: try container.decode(Set<NotifiedThreshold>.self, forKey: .notifiedThresholds),
+            note: try container.decode(String.self, forKey: .note),
+            lastActivityTime: try container.decodeIfPresent(Date.self, forKey: .lastActivityTime)
+        )
+        let v072 = try decoder.container(keyedBy: V072Keys.self)
+        let pauses = try v072.decodeIfPresent([V072Pause].self, forKey: .pauses) ?? []
+        for pause in pauses {
+            if let end = pause.end {
+                let start = max(pause.start, startTime)
+                let clampedEnd = endTime.map { min(end, $0) } ?? end
+                manualPauseSeconds += max(0, clampedEnd.timeIntervalSince(start))
+            } else {
+                pauseStartedAt = pause.start
+            }
+        }
     }
 }
 
