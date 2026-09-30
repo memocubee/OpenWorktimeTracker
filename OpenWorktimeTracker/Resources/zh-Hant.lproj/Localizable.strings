@@ -192,3 +192,31 @@
 "logEditor.error.invalidTimes" = "檢查一下上班、下班和休息時間。";
 "logEditor.error.saveFailed" = "存不進去，你的修改還在。檢查紀錄資料夾後再試一次。";
 "logEditor.error.deleteFailed" = "刪不掉，紀錄沒有變動。檢查紀錄資料夾後再試一次。";
+
+/* Breaks (Pause Intervals) */
+"pauses.title" = "休息時段";
+"pauses.row" = "休息 %1$@–%2$@（%3$@）";
+"pauses.row.open" = "休息 %1$@–進行中（%2$@）";
+"pauses.legacy" = "休息（舊紀錄，沒有時段）%@";
+"pauses.legacy.label" = "休息（舊紀錄，沒有時段）";
+"pauses.legacy.title" = "修改舊紀錄的休息";
+"pauses.duration.hoursMinutes" = "%1$ld 小時 %2$ld 分";
+"pauses.duration.minutes" = "%ld 分鐘";
+"pauses.edit.title" = "修改休息時段";
+"pauses.edit.help" = "修改這段休息";
+"pauses.edit.start" = "開始";
+"pauses.edit.end" = "結束";
+"pauses.edit.stillOpen" = "還在休息中";
+"pauses.edit.delete" = "刪除這段休息";
+"pauses.add" = "新增休息時段";
+"pauses.error.endNotAfterStart" = "休息的結束時間要晚於開始時間。";
+"pauses.error.outsideWorkday" = "休息要落在上班到下班之間。";
+"pauses.error.inFuture" = "休息時間不能超過現在。";
+"pauses.error.overlapping" = "這段休息跟另一段重疊了，調整一下時間讓它們不要重疊。";
+"pauses.error.noWorkday" = "現在沒有可以修改的工作日。";
+"pauses.error.saveFailed" = "存不進去，檢查紀錄資料夾後再試一次。";
+"resumeAt.title" = "我幾點回來的？";
+"resumeAt.hint" = "忘了按「回來上班」？選你實際回來的時間，之後都算工時。";
+"resumeAt.pauseStart" = "休息開始";
+"resumeAt.returnTime" = "回來上班";
+"resumeAt.confirm" = "就從這個時間回來上班";

@@ -192,3 +192,31 @@
 "logEditor.error.saveFailed" = "The entry could not be saved locally. Your edits are still available. Check the log folder and try again.";
 "logEditor.error.deleteFailed" = "The entry could not be deleted. Tracking is unchanged. Check the log folder and try again.";
 "settings.manualPunch" = "Manual clock-in (start the day with the Start button)";
+
+/* Breaks (Pause Intervals) */
+"pauses.title" = "Breaks";
+"pauses.row" = "Break %1$@–%2$@ (%3$@)";
+"pauses.row.open" = "Break %1$@–now (%2$@)";
+"pauses.legacy" = "Break (older record, no times) %@";
+"pauses.legacy.label" = "Break (older record, no times)";
+"pauses.legacy.title" = "Edit Older Break";
+"pauses.duration.hoursMinutes" = "%1$ld h %2$ld min";
+"pauses.duration.minutes" = "%ld min";
+"pauses.edit.title" = "Edit Break";
+"pauses.edit.help" = "Edit this break";
+"pauses.edit.start" = "Start";
+"pauses.edit.end" = "End";
+"pauses.edit.stillOpen" = "Still on break";
+"pauses.edit.delete" = "Delete Break";
+"pauses.add" = "Add Break";
+"pauses.error.endNotAfterStart" = "A break has to end after it starts.";
+"pauses.error.outsideWorkday" = "Breaks have to fall between clocking in and clocking out.";
+"pauses.error.inFuture" = "A break can't be in the future.";
+"pauses.error.overlapping" = "This break overlaps another one. Adjust the times so they don't overlap.";
+"pauses.error.noWorkday" = "There's no workday to edit.";
+"pauses.error.saveFailed" = "Couldn't save. Check the log folder and try again.";
+"resumeAt.title" = "When did I come back?";
+"resumeAt.hint" = "Forgot to press Resume? Pick when you actually came back; everything after that counts as work.";
+"resumeAt.pauseStart" = "Break started";
+"resumeAt.returnTime" = "Back at work";
+"resumeAt.confirm" = "Resume at This Time";

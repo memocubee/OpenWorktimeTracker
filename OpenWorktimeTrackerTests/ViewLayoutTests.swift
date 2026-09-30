@@ -232,6 +232,41 @@ final class ViewLayoutTests: XCTestCase {
     }
 
     @MainActor
+    func testBreakRowsFitPopoverWidth() throws {
+        let manager = WorkdayManager(
+            store: InMemoryDailyLogStore(), notifications: RecordingWorkdayNotifications())
+        manager.startNewDay()
+        XCTAssertNil(manager.updateLegacyPauseSeconds(1800))
+        manager.pause()
+        for language in ["de", "en"] {
+            try assertLayout(
+                MetricCardsView().environment(manager)
+                    .frame(width: DesignTokens.popoverWidth - 2 * DesignTokens.Spacing.lg),
+                name: "metrics-with-breaks-\(language)", language: language, dark: false,
+                bounds: CGSize(
+                    width: DesignTokens.popoverWidth - 2 * DesignTokens.Spacing.lg, height: 360))
+        }
+    }
+
+    @MainActor
+    func testLogEditorWithBreaksFitsNarrowDetailColumn() throws {
+        let manager = WorkdayManager(store: InMemoryDailyLogStore())
+        let start = Date(timeIntervalSince1970: 1_700_000_000)
+        var entry = TimeEntry(startTime: start, manualPauseSeconds: 900)
+        entry.endTime = start.addingTimeInterval(8 * 3600)
+        entry.status = .ended
+        entry.pauses = [
+            PauseInterval(start: start.addingTimeInterval(4 * 3600), end: start.addingTimeInterval(5 * 3600)),
+            PauseInterval(start: start.addingTimeInterval(6 * 3600), end: start.addingTimeInterval(6.25 * 3600))
+        ]
+        try assertLayout(
+            LogEntryEditView(entry: entry, manager: manager, onSave: { _ in }, onDelete: { _ in })
+                .frame(width: 380, height: 450),
+            name: "log-editor-breaks", language: "de", dark: false,
+            bounds: CGSize(width: 380, height: 450))
+    }
+
+    @MainActor
     func testLogEditorFitsNarrowDetailColumn() throws {
         let manager = WorkdayManager(store: InMemoryDailyLogStore())
         var entry = TimeEntry(startTime: Date(timeIntervalSince1970: 1_700_000_000))

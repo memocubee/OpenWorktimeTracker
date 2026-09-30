@@ -8,6 +8,9 @@ struct TimeEntry: Codable, Identifiable {
     var status: Status
     var manualPauseSeconds: TimeInterval
     var pauseStartedAt: Date?
+    /// Each Pause the user took. Absent from Daily Logs written before Pause
+    /// Intervals existed; see `PauseInterval` for how both are counted.
+    var pauses: [PauseInterval]
     var idleDecisions: [IdleDecision]
     var notifiedThresholds: Set<NotifiedThreshold>
     var note: String
@@ -28,6 +31,7 @@ struct TimeEntry: Codable, Identifiable {
         status: Status = .running,
         manualPauseSeconds: TimeInterval = 0,
         pauseStartedAt: Date? = nil,
+        pauses: [PauseInterval] = [],
         idleDecisions: [IdleDecision] = [],
         notifiedThresholds: Set<NotifiedThreshold> = [],
         note: String = "",
@@ -40,6 +44,7 @@ struct TimeEntry: Codable, Identifiable {
         self.status = status
         self.manualPauseSeconds = manualPauseSeconds
         self.pauseStartedAt = pauseStartedAt
+        self.pauses = pauses
         self.idleDecisions = idleDecisions
         self.notifiedThresholds = notifiedThresholds
         self.note = note
@@ -54,11 +59,7 @@ struct TimeEntry: Codable, Identifiable {
     }
 
     var totalManualPause: TimeInterval {
-        var pause = manualPauseSeconds
-        if status == .paused, let pauseStart = pauseStartedAt {
-            pause += Date().timeIntervalSince(pauseStart)
-        }
-        return pause
+        manualPause(endingAt: endTime ?? Date())
     }
 
     var totalIdlePause: TimeInterval {
@@ -67,18 +68,51 @@ struct TimeEntry: Codable, Identifiable {
 
     func idlePause(endingAt instant: Date) -> TimeInterval {
         let end = min(instant, endTime ?? instant)
-        let intervals = idleDecisions
-            .filter { $0.decision == .pause }
-            .map { (start: max(startTime, $0.idleStart), end: min(end, $0.idleEnd)) }
-            .filter { $0.end > $0.start }
-            .sorted { $0.start < $1.start }
-        var coveredUntil = startTime
-        var total: TimeInterval = 0
-        for interval in intervals {
-            total += max(0, interval.end.timeIntervalSince(max(coveredUntil, interval.start)))
-            coveredUntil = max(coveredUntil, interval.end)
+        return TimeCoverage.covered(idlePauseSpans(), from: startTime, to: end)
+    }
+
+    // MARK: - Coding
+
+    private enum CodingKeys: String, CodingKey {
+        case id, date, startTime, endTime, status, manualPauseSeconds, pauseStartedAt
+        case pauses, idleDecisions, notifiedThresholds, note, lastActivityTime
+    }
+
+    /// Daily Logs written before Pause Intervals existed have no `pauses` key.
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        id = try container.decode(UUID.self, forKey: .id)
+        date = try container.decode(String.self, forKey: .date)
+        startTime = try container.decode(Date.self, forKey: .startTime)
+        endTime = try container.decodeIfPresent(Date.self, forKey: .endTime)
+        status = try container.decode(Status.self, forKey: .status)
+        manualPauseSeconds = try container.decode(TimeInterval.self, forKey: .manualPauseSeconds)
+        pauseStartedAt = try container.decodeIfPresent(Date.self, forKey: .pauseStartedAt)
+        pauses = try container.decodeIfPresent([PauseInterval].self, forKey: .pauses) ?? []
+        idleDecisions = try container.decode([IdleDecision].self, forKey: .idleDecisions)
+        notifiedThresholds = try container.decode(Set<NotifiedThreshold>.self, forKey: .notifiedThresholds)
+        note = try container.decode(String.self, forKey: .note)
+        lastActivityTime = try container.decodeIfPresent(Date.self, forKey: .lastActivityTime)
+    }
+
+    /// Writes the shipped keys unchanged; `pauses` only once there is one, so a
+    /// day without breaks keeps the shipped file format.
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(id, forKey: .id)
+        try container.encode(date, forKey: .date)
+        try container.encode(startTime, forKey: .startTime)
+        try container.encodeIfPresent(endTime, forKey: .endTime)
+        try container.encode(status, forKey: .status)
+        try container.encode(manualPauseSeconds, forKey: .manualPauseSeconds)
+        try container.encodeIfPresent(pauseStartedAt, forKey: .pauseStartedAt)
+        if !pauses.isEmpty {
+            try container.encode(pauses, forKey: .pauses)
         }
-        return total
+        try container.encode(idleDecisions, forKey: .idleDecisions)
+        try container.encode(notifiedThresholds, forKey: .notifiedThresholds)
+        try container.encode(note, forKey: .note)
+        try container.encodeIfPresent(lastActivityTime, forKey: .lastActivityTime)
     }
 
     private static let dateStringFormatter: DateFormatter = {

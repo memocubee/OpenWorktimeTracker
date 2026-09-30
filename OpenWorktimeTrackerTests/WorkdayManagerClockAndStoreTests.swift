@@ -311,7 +311,8 @@ final class WorkdayManagerClockAndStoreTests: XCTestCase {
         XCTAssertEqual(saved?.note, edited.note)
         XCTAssertEqual(saved?.status, .ended)
         XCTAssertEqual(saved?.endTime, end)
-        XCTAssertEqual(saved?.manualPauseSeconds, 900)
+        XCTAssertEqual(saved?.pauses.count, 1)
+        XCTAssertEqual(saved.map { manager.workday(for: $0).manualPause } ?? 0, 900)
         XCTAssertEqual(manager.state, .ended)
         XCTAssertEqual(manager.netTime, 3600)
     }
@@ -452,7 +453,7 @@ final class WorkdayManagerClockAndStoreTests: XCTestCase {
 
         manager.resume()
 
-        XCTAssertEqual(manager.currentEntry?.manualPauseSeconds ?? 0, 900)
+        XCTAssertEqual(manager.currentWorkday?.manualPause(endingAt: clock.now) ?? 0, 900)
     }
 
     func testEndDayUsesTheInjectedClockExactly() {

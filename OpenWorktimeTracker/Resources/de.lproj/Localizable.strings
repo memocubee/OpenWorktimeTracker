@@ -192,3 +192,31 @@
 "logEditor.error.saveFailed" = "Der Eintrag konnte nicht lokal gespeichert werden. Ihre Änderungen bleiben im Editor erhalten. Prüfen Sie den Protokollordner und versuchen Sie es erneut.";
 "logEditor.error.deleteFailed" = "Der Eintrag konnte nicht gelöscht werden. Die Zeiterfassung bleibt unverändert. Prüfen Sie den Protokollordner und versuchen Sie es erneut.";
 "settings.manualPunch" = "Manuell einstempeln (Tag per Start-Taste beginnen)";
+
+/* Breaks (Pause Intervals) */
+"pauses.title" = "Pausen";
+"pauses.row" = "Pause %1$@–%2$@ (%3$@)";
+"pauses.row.open" = "Pause %1$@–jetzt (%2$@)";
+"pauses.legacy" = "Pause (älterer Eintrag, ohne Uhrzeiten) %@";
+"pauses.legacy.label" = "Pause (älterer Eintrag, ohne Uhrzeiten)";
+"pauses.legacy.title" = "Ältere Pause bearbeiten";
+"pauses.duration.hoursMinutes" = "%1$ld Std. %2$ld Min.";
+"pauses.duration.minutes" = "%ld Min.";
+"pauses.edit.title" = "Pause bearbeiten";
+"pauses.edit.help" = "Diese Pause bearbeiten";
+"pauses.edit.start" = "Beginn";
+"pauses.edit.end" = "Ende";
+"pauses.edit.stillOpen" = "Pause läuft noch";
+"pauses.edit.delete" = "Pause löschen";
+"pauses.add" = "Pause hinzufügen";
+"pauses.error.endNotAfterStart" = "Eine Pause muss nach ihrem Beginn enden.";
+"pauses.error.outsideWorkday" = "Pausen müssen zwischen Arbeitsbeginn und -ende liegen.";
+"pauses.error.inFuture" = "Eine Pause kann nicht in der Zukunft liegen.";
+"pauses.error.overlapping" = "Diese Pause überschneidet sich mit einer anderen. Passe die Zeiten an.";
+"pauses.error.noWorkday" = "Es gibt keinen Arbeitstag zum Bearbeiten.";
+"pauses.error.saveFailed" = "Speichern fehlgeschlagen. Prüfe den Protokollordner und versuche es erneut.";
+"resumeAt.title" = "Wann war ich zurück?";
+"resumeAt.hint" = "Fortsetzen vergessen? Wähle, wann du wirklich zurück warst – alles danach zählt als Arbeitszeit.";
+"resumeAt.pauseStart" = "Pause begann";
+"resumeAt.returnTime" = "Zurück um";
+"resumeAt.confirm" = "Zu dieser Zeit fortsetzen";

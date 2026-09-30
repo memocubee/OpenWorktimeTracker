@@ -41,8 +41,8 @@ final class WorkdayManager {
     let idleDetector: IdleDetector
     private let notifications: WorkdayNotificationSending
     private let defaults: UserDefaults
-    private let clock: Clock
-    private let store: DailyLogStore
+    let clock: Clock
+    let store: DailyLogStore
     private let prompts: WorkdayPromptPresenting
     private let widgetStore: SharedDefaults
 
@@ -244,15 +244,18 @@ final class WorkdayManager {
         activate(paused)
     }
 
-    func resume() {
+    /// Resumes now, or at `requested` for a return the user forgot to punch.
+    /// Clamped to between the open Pause's start and now.
+    func resume(at requested: Date? = nil) {
         guard state == .paused, let current = currentWorkday else { return }
+        let returnedAt = min(clock.now, max(requested ?? clock.now, current.payload.currentPauseStart ?? .distantPast))
         let detector = WorkdayDetector(newDayStartHour: newDayStartHour)
         if detector.effectiveDateString(for: clock.now) > current.date {
             finish(at: detector.startOfEffectiveDay(for: clock.now))
             startNewDay()
             return
         }
-        let resumed = current.resumed(at: clock.now)
+        let resumed = current.resumed(at: returnedAt)
         store.save(resumed.payload)
         activate(resumed)
     }
@@ -273,7 +276,7 @@ final class WorkdayManager {
         activate(restarted)
     }
 
-    private func activate(_ workday: Workday) {
+    func activate(_ workday: Workday) {
         currentWorkday = workday
         state = WorkdayState(workday.status)
         startTimer()
@@ -311,6 +314,7 @@ final class WorkdayManager {
             latest.manualPauseSeconds = edited.manualPauseSeconds
         }
         if edited.note != original.note { latest.note = edited.note }
+        latest.applyPauseEdits(from: original.pauses, to: edited.pauses, now: clock.now)
         for decision in edited.idleDecisions {
             if let before = original.idleDecisions.first(where: { $0.id == decision.id }),
                 before.decision != decision.decision,
@@ -343,6 +347,7 @@ final class WorkdayManager {
             && entry.startTime <= end
             && entry.manualPauseSeconds.isFinite && entry.manualPauseSeconds >= 0
             && (entry.status != .ended || entry.endTime != nil)
+            && entry.pauseValidationError(now: clock.now) == nil
     }
 
     func loadDailyLogs() -> [TimeEntry] {
@@ -388,6 +393,7 @@ final class WorkdayManager {
             return
         }
         let updated = current.withStartTime(newStart)
+        guard updated.payload.pauseValidationError(now: clock.now) == nil else { return }
         currentWorkday = updated
         store.save(updated.payload)
         updateComputedValues()
@@ -399,6 +405,7 @@ final class WorkdayManager {
         guard let current = currentWorkday, state == .ended else { return }
         if newEnd < current.startTime { return }
         let updated = current.withEndTime(newEnd)
+        guard updated.payload.pauseValidationError(now: clock.now) == nil else { return }
         currentWorkday = updated
         store.save(updated.payload)
         updateComputedValues()
