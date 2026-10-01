@@ -77,12 +77,6 @@ struct SummaryStatsView: View {
                     )
                 }
             }
-
-            // Six-month heatmap, to spot overtime days
-            if period == .month {
-                WorkHeatmapView()
-                    .padding(.top, DesignTokens.Spacing.xs)
-            }
         }
         .onAppear { loadEntries() }
         .onChange(of: period) { _, _ in loadEntries() }

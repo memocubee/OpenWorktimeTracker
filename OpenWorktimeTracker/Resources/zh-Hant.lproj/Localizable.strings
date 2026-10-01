@@ -11,6 +11,9 @@
 "menubar.exportCSV" = "匯出 CSV…";
 "menubar.settings" = "設定…";
 "menubar.quit" = "結束程式";
+"menubar.tab" = "切換畫面";
+"menubar.tab.today" = "今天";
+"menubar.tab.records" = "紀錄";
 "menu.edit" = "編輯";
 "menu.undo" = "還原";
 "menu.redo" = "重做";
@@ -63,6 +66,7 @@
 "history.last7days" = "最近 7 天";
 "history.noData" = "還沒有紀錄";
 "history.total" = "共 %@";
+"history.tooltip.overtime" = "超時 %1$ld 小時 %2$ld 分";
 
 /* SummaryStatsView */
 "summary.title" = "統計";

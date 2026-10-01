@@ -11,6 +11,9 @@
 "menubar.exportCSV" = "CSV exportieren...";
 "menubar.settings" = "Einstellungen...";
 "menubar.quit" = "Beenden";
+"menubar.tab" = "Ansicht";
+"menubar.tab.today" = "Heute";
+"menubar.tab.records" = "Verlauf";
 "menu.edit" = "Bearbeiten";
 "menu.undo" = "Widerrufen";
 "menu.redo" = "Wiederholen";
@@ -63,6 +66,7 @@
 "history.last7days" = "LETZTE 7 TAGE";
 "history.noData" = "Noch keine Daten";
 "history.total" = "%@ gesamt";
+"history.tooltip.overtime" = "%1$ld Std. %2$ld Min. über dem Ziel";
 
 /* SummaryStatsView */
 "summary.title" = "ZUSAMMENFASSUNG";

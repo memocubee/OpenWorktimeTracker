@@ -167,6 +167,39 @@ struct WorkHeatmapView: View {
     static func hours(_ value: Double) -> String {
         hoursFormatter.string(from: NSNumber(value: value)) ?? String(format: "%.1f", value)
     }
+
+    // MARK: - Tooltip
+
+    /// "9/24 (Thu)" in the user's locale.
+    static func tooltipDate(_ date: Date) -> String {
+        String(
+            format: String(localized: "heatmap.tooltip.date"),
+            tooltipDateFormatter.string(from: date),
+            tooltipWeekdayFormatter.string(from: date))
+    }
+
+    /// Date, start–end (or "now" while running) and Net Work Time, shared by
+    /// the heatmap cells and the last-7-days bars.
+    static func tooltip(date: Date, startTime: Date, endTime: Date?, netHours: Double) -> String {
+        String(
+            format: String(localized: "heatmap.tooltip"),
+            tooltipDate(date),
+            startTime.hoursMinutesString,
+            endTime?.hoursMinutesString ?? String(localized: "heatmap.running"),
+            hours(netHours))
+    }
+
+    private static let tooltipDateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.setLocalizedDateFormatFromTemplate("Md")
+        return formatter
+    }()
+
+    private static let tooltipWeekdayFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.setLocalizedDateFormatFromTemplate("EEE")
+        return formatter
+    }()
 }
 
 // MARK: - Cell
@@ -192,32 +225,13 @@ private struct HeatmapCell: View {
     }
 
     private var tooltip: String {
-        let date = String(
-            format: String(localized: "heatmap.tooltip.date"),
-            Self.dateFormatter.string(from: day.date),
-            Self.weekdayFormatter.string(from: day.date))
         guard let log = day.log, log.netHours > 0 else {
-            return String(format: String(localized: "heatmap.tooltip.empty"), date)
+            return String(
+                format: String(localized: "heatmap.tooltip.empty"), WorkHeatmapView.tooltipDate(day.date))
         }
-        return String(
-            format: String(localized: "heatmap.tooltip"),
-            date,
-            log.startTime.hoursMinutesString,
-            log.endTime?.hoursMinutesString ?? String(localized: "heatmap.running"),
-            WorkHeatmapView.hours(log.netHours))
+        return WorkHeatmapView.tooltip(
+            date: day.date, startTime: log.startTime, endTime: log.endTime, netHours: log.netHours)
     }
-
-    private static let dateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.setLocalizedDateFormatFromTemplate("Md")
-        return formatter
-    }()
-
-    private static let weekdayFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.setLocalizedDateFormatFromTemplate("EEE")
-        return formatter
-    }()
 }
 
 // MARK: - Swatch
@@ -228,12 +242,18 @@ private struct HeatmapSwatch: View {
 
     var body: some View {
         RoundedRectangle(cornerRadius: 2)
-            .fill(color)
+            .fill(level.color)
             .frame(width: size, height: size)
     }
+}
 
-    private var color: Color {
-        switch level {
+// MARK: - Level Colors
+
+extension HeatLevel {
+    /// Green shades up to the daily goal, orange past it, red past the red line.
+    /// Shared with the last-7-days bars so both read the same way.
+    var color: Color {
+        switch self {
         case .none: return DesignTokens.Colors.surfaceContainerHighest
         case .light: return DesignTokens.Colors.accentGreen.opacity(0.3)
         case .medium: return DesignTokens.Colors.accentGreen.opacity(0.6)
