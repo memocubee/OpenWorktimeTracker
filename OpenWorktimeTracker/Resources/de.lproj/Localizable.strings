@@ -11,6 +11,9 @@
 "menubar.exportCSV" = "CSV exportieren...";
 "menubar.settings" = "Einstellungen...";
 "menubar.quit" = "Beenden";
+"menubar.tab" = "Ansicht";
+"menubar.tab.today" = "Heute";
+"menubar.tab.records" = "Verlauf";
 "menu.edit" = "Bearbeiten";
 "menu.undo" = "Widerrufen";
 "menu.redo" = "Wiederholen";
@@ -45,11 +48,25 @@
 "metric.editEndTime" = "Endzeit bearbeiten";
 "metric.cancel" = "Abbrechen";
 "metric.save" = "Speichern";
+"metric.editPause" = "Pausenzeit bearbeiten";
+
+/* Pause total editor */
+"pauseTotal.label" = "Pause heute gesamt";
+"pauseTotal.hours" = "Std.";
+"pauseTotal.minutes" = "Min.";
+"pauseTotal.ok" = "OK";
+"pauseTotal.pausedHint" = "Du machst gerade Pause. Setze zuerst die Arbeit fort und bearbeite dann die Summe.";
+"pauseTotal.idleNote" = "Davon sind %@ Abwesenheit, als Pause gewertet; das änderst du im Arbeitszeit-Protokoll.";
+"pauseTotal.error.belowIdle" = "Mindestens %@ (als Pause gewertete Abwesenheit).";
+"pauseTotal.error.exceedsGross" = "Darf nicht mehr als die Bruttozeit von %@ sein.";
+"pauseTotal.error.noWorkday" = "Heute wurde noch kein Arbeitstag gestartet.";
+"pauseTotal.error.saveFailed" = "Speichern fehlgeschlagen. Prüfe den Protokollordner und versuche es erneut.";
 
 /* WeekHistoryView */
 "history.last7days" = "LETZTE 7 TAGE";
 "history.noData" = "Noch keine Daten";
 "history.total" = "%@ gesamt";
+"history.tooltip.overtime" = "%1$ld Std. %2$ld Min. über dem Ziel";
 
 /* SummaryStatsView */
 "summary.title" = "ZUSAMMENFASSUNG";
@@ -61,6 +78,21 @@
 "summary.dailyAvg" = "Tagesschnitt";
 "summary.overtime" = "Überstunden";
 "summary.period" = "Auswertungszeitraum";
+
+/* WorkHeatmapView */
+"heatmap.title" = "LETZTE 6 MONATE";
+"heatmap.workedDays" = "Arbeitstage";
+"heatmap.overtimeDays" = "Überstundentage";
+"heatmap.average" = "Ø pro Tag";
+"heatmap.days" = "%ld Tage";
+"heatmap.hours" = "%@ Std.";
+"heatmap.tooltip.date" = "%2$@, %1$@";
+"heatmap.tooltip" = "%1$@ · %2$@–%3$@ · %4$@ Std. netto";
+"heatmap.tooltip.empty" = "%@ · Nicht gearbeitet";
+"heatmap.running" = "jetzt";
+"heatmap.legend.upTo" = "≤%@h";
+"heatmap.legend.between" = "%1$@–%2$@h";
+"heatmap.legend.above" = ">%@h";
 
 /* IdlePromptView */
 "idle.newWorkday" = "Neuer Arbeitstag!";
@@ -176,3 +208,4 @@
 "logEditor.error.invalidTimes" = "Bitte prüfen Sie die Start-, End- und Pausenzeiten.";
 "logEditor.error.saveFailed" = "Der Eintrag konnte nicht lokal gespeichert werden. Ihre Änderungen bleiben im Editor erhalten. Prüfen Sie den Protokollordner und versuchen Sie es erneut.";
 "logEditor.error.deleteFailed" = "Der Eintrag konnte nicht gelöscht werden. Die Zeiterfassung bleibt unverändert. Prüfen Sie den Protokollordner und versuchen Sie es erneut.";
+"settings.manualPunch" = "Manuell einstempeln (Tag per Start-Taste beginnen)";

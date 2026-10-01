@@ -1,8 +1,13 @@
 import SwiftUI
 
+/// The last seven calendar days as columns, oldest on the left and today last.
+/// Each worked day's bar carries its Net Work Time on top and the heatmap's
+/// colour, so overtime days stand out; days without work stay as empty slots.
 struct WeekHistoryView: View {
     @Environment(WorkdayManager.self) private var manager
-    @State private var entries: [TimeEntry] = []
+    @State private var bars: [WeekBar] = []
+
+    private static let barAreaHeight: CGFloat = 72
 
     var body: some View {
         VStack(alignment: .leading, spacing: DesignTokens.Spacing.sm) {
@@ -18,17 +23,10 @@ struct WeekHistoryView: View {
                     .monospacedDigit()
             }
 
-            if entries.isEmpty {
-                Text("history.noData")
-                    .font(DesignTokens.Typography.bodySmall)
-                    .foregroundStyle(DesignTokens.Colors.onSurfaceVariant)
-                    .frame(maxWidth: .infinity, alignment: .center)
-                    .padding(.vertical, DesignTokens.Spacing.sm)
-            } else {
-                VStack(spacing: 2) {
-                    ForEach(entries) { entry in
-                        DayRow(workday: manager.workday(for: entry), maxHours: maxHours)
-                    }
+            let maxHours = WeekBar.chartMaxHours(for: bars, scale: manager.heatScale)
+            HStack(alignment: .bottom, spacing: DesignTokens.Spacing.xs) {
+                ForEach(bars) { bar in
+                    DayColumn(bar: bar, maxHours: maxHours, barAreaHeight: Self.barAreaHeight)
                 }
             }
         }
@@ -37,98 +35,117 @@ struct WeekHistoryView: View {
     }
 
     private func loadHistory() {
-        entries = manager.persistence.loadLastDays(7)
-    }
-
-    private var maxHours: Double {
-        max(10, entries.map { netHours(for: $0) }.max() ?? 8)
+        bars = WeekBar.lastSevenDays(
+            now: manager.clock.now, newDayStartHour: manager.newDayStartHour, scale: manager.heatScale
+        ) { date in
+            manager.store.load(for: date).map { entry in
+                WeekBar.Log(
+                    netWorkTime: manager.workday(for: entry).netWorkTime,
+                    startTime: entry.startTime,
+                    endTime: entry.endTime)
+            }
+        }
     }
 
     private var weekTotal: String {
-        let total = entries.reduce(0.0) { $0 + manager.workday(for: $1).netWorkTime }
+        let total = bars.reduce(0.0) { $0 + $1.netWorkTime }
         return String(
             format: String(localized: "history.total"),
             total.hoursMinutesFormatted)
     }
-
-    private func netHours(for entry: TimeEntry) -> Double {
-        manager.workday(for: entry).netWorkTime.inHours
-    }
 }
 
-// MARK: - Day Row
+// MARK: - Day Column
 
-private struct DayRow: View {
-    let workday: Workday
+private struct DayColumn: View {
+    let bar: WeekBar
     let maxHours: Double
-
-    private var entry: TimeEntry { workday.payload }
+    let barAreaHeight: CGFloat
 
     var body: some View {
-        HStack(spacing: DesignTokens.Spacing.sm) {
-            // Weekday abbreviation
-            Text(weekdayAbbr)
-                .font(DesignTokens.Typography.labelMicro)
-                .foregroundStyle(DesignTokens.Colors.onSurfaceVariant)
-                .frame(width: 28, alignment: .leading)
-
-            // Date
-            Text(shortDate)
-                .font(DesignTokens.Typography.labelMicro)
-                .foregroundStyle(DesignTokens.Colors.onSurfaceVariant)
-                .frame(width: 40, alignment: .leading)
-                .monospacedDigit()
-
-            // Bar
-            GeometryReader { geo in
-                let width = max(0, geo.size.width * (netHours / maxHours))
-                RoundedRectangle(cornerRadius: 2)
-                    .fill(barColor)
-                    .frame(width: width, height: 12)
-                    .frame(maxHeight: .infinity, alignment: .center)
+        VStack(spacing: 2) {
+            // Bar with its hours sitting right above it
+            VStack(spacing: 2) {
+                Spacer(minLength: 0)
+                Text(bar.hasLog ? bar.netWorkTime.hoursMinutesFormatted : "—")
+                    .font(.system(size: 10, weight: .semibold))
+                    .foregroundStyle(hoursColor)
+                    .monospacedDigit()
+                    .lineLimit(1)
+                    .fixedSize()
+                RoundedRectangle(cornerRadius: 3)
+                    .fill(bar.hasLog ? bar.level.color : DesignTokens.Colors.onSurfaceVariant.opacity(0.18))
+                    .frame(height: barHeight)
+                    .overlay {
+                        if bar.isToday {
+                            RoundedRectangle(cornerRadius: 3)
+                                .strokeBorder(DesignTokens.Colors.onSurface.opacity(0.55), lineWidth: 1.5)
+                        }
+                    }
             }
-            .frame(height: 16)
+            .frame(height: barAreaHeight + 16)
 
-            // Hours
-            Text(workday.netWorkTime.hoursMinutesFormatted)
+            Text(Self.weekdayFormatter.string(from: day))
                 .font(DesignTokens.Typography.labelMicro)
-                .foregroundStyle(DesignTokens.Colors.onSurface)
+                .fontWeight(bar.isToday ? .bold : .medium)
+                .foregroundStyle(
+                    bar.isToday ? DesignTokens.Colors.onSurface : DesignTokens.Colors.onSurfaceVariant)
+                .lineLimit(1)
+            Text(Self.dateFormatter.string(from: day))
+                .font(.system(size: 9))
+                .foregroundStyle(DesignTokens.Colors.onSurfaceVariant)
                 .monospacedDigit()
-                .frame(width: 44, alignment: .trailing)
+                .lineLimit(1)
         }
-        .padding(.vertical, DesignTokens.Spacing.xs)
+        .frame(maxWidth: .infinity)
+        .contentShape(Rectangle())
+        .help(tooltip)
         .accessibilityElement(children: .ignore)
-        .accessibilityLabel(Text("\(weekdayAbbr), \(entry.date)"))
-        .accessibilityValue(Text(workday.netWorkTime.hoursMinutesFormatted))
+        .accessibilityLabel(Text(tooltip))
     }
 
-    private var netHours: Double {
-        workday.netWorkTime.inHours
+    private var hoursColor: Color {
+        guard bar.hasLog else { return DesignTokens.Colors.onSurfaceVariant.opacity(0.6) }
+        return bar.level >= .overtime ? bar.level.color : DesignTokens.Colors.onSurface
     }
 
-    private var barColor: Color {
-        workday.thresholdLevel.accent.color
+    private var barHeight: CGFloat {
+        guard bar.hasLog, bar.netHours > 0, maxHours > 0 else { return 3 }
+        return max(3, barAreaHeight * CGFloat(min(1, bar.netHours / maxHours)))
     }
 
-    private var weekdayAbbr: String {
-        guard let date = parseDate() else { return "?" }
-        let formatter = DateFormatter()
-        formatter.dateFormat = "EE"
-        formatter.locale = Locale.current
-        return formatter.string(from: date)
+    private var day: Date {
+        Self.parser.date(from: bar.date) ?? Date()
     }
 
-    private var shortDate: String {
-        guard let date = parseDate() else { return entry.date }
-        let formatter = DateFormatter()
-        formatter.dateFormat = "dd.MM"
-        return formatter.string(from: date)
+    private var tooltip: String {
+        guard let log = bar.log else {
+            return String(
+                format: String(localized: "heatmap.tooltip.empty"), WorkHeatmapView.tooltipDate(day))
+        }
+        let summary = WorkHeatmapView.tooltip(
+            date: day, startTime: log.startTime, endTime: log.endTime, netHours: bar.netHours)
+        guard let overtime = bar.overtimeHoursMinutes else { return summary }
+        return summary + "\n"
+            + String(format: String(localized: "history.tooltip.overtime"), overtime.hours, overtime.minutes)
     }
 
-    private func parseDate() -> Date? {
+    private static let parser: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
         formatter.locale = Locale(identifier: "en_US_POSIX")
-        return formatter.date(from: entry.date)
-    }
+        return formatter
+    }()
+
+    private static let weekdayFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.setLocalizedDateFormatFromTemplate("EEE")
+        return formatter
+    }()
+
+    private static let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.setLocalizedDateFormatFromTemplate("Md")
+        return formatter
+    }()
 }

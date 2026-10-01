@@ -232,6 +232,60 @@ final class ViewLayoutTests: XCTestCase {
     }
 
     @MainActor
+    func testPopoverTabsFitPopoverInAllLanguages() throws {
+        let manager = WorkdayManager(store: InMemoryDailyLogStore())
+        manager.startNewDay()
+        manager.updateStartTime(Date().addingTimeInterval(-5 * 3600))
+        let width = DesignTokens.popoverWidth - 2 * DesignTokens.Spacing.lg
+        for language in ["de", "en", "zh-Hant"] {
+            for dark in [false, true] {
+                // Today sits between the tab switch, the header and the action bar
+                try assertLayout(
+                    TodayTabView().environment(manager).frame(width: width),
+                    name: "today-tab-\(language)-\(dark)", language: language, dark: dark,
+                    bounds: CGSize(width: width, height: 424))
+                // Records sits between the tab switch and a slim footer
+                try assertLayout(
+                    RecordsTabView().environment(manager).frame(width: width),
+                    name: "records-tab-\(language)-\(dark)", language: language, dark: dark,
+                    bounds: CGSize(width: width, height: 533))
+            }
+        }
+    }
+
+    @MainActor
+    func testHeatmapFitsRecordsTabWithoutScrolling() {
+        let manager = WorkdayManager(store: InMemoryDailyLogStore())
+        let host = NSHostingView(rootView: WorkHeatmapView().environment(manager).fixedSize())
+        XCTAssertLessThanOrEqual(
+            host.fittingSize.width, DesignTokens.popoverWidth - 2 * DesignTokens.Spacing.lg,
+            "The six-month grid must show whole, not behind a horizontal scroll")
+    }
+
+    func testPopoverTabsRoundTripThroughStorage() {
+        XCTAssertEqual(MenuBarTab.allCases, [.today, .records])
+        for tab in MenuBarTab.allCases {
+            XCTAssertEqual(MenuBarTab(rawValue: tab.rawValue), tab)
+        }
+    }
+
+    @MainActor
+    func testPauseTotalEditorFitsItsPopover() throws {
+        let manager = WorkdayManager(store: InMemoryDailyLogStore())
+        manager.startNewDay()
+        manager.updateStartTime(Date().addingTimeInterval(-4 * 3600))
+        for paused in [false, true] {
+            if paused { manager.pause() }
+            for language in ["de", "en", "zh-Hant"] {
+                try assertLayout(
+                    PauseTotalEditor(initialTotal: 30 * 60, onClose: {}).environment(manager),
+                    name: "pause-total-\(language)-\(paused)", language: language, dark: false,
+                    bounds: CGSize(width: 260, height: 320))
+            }
+        }
+    }
+
+    @MainActor
     func testLogEditorFitsNarrowDetailColumn() throws {
         let manager = WorkdayManager(store: InMemoryDailyLogStore())
         var entry = TimeEntry(startTime: Date(timeIntervalSince1970: 1_700_000_000))
@@ -255,6 +309,7 @@ final class ViewLayoutTests: XCTestCase {
             .environment(\.colorScheme, dark ? .dark : .light))
         host.appearance = NSAppearance(named: dark ? .darkAqua : .aqua)
         let size = host.fittingSize
+        print("[layout] \(name): \(size)")
         XCTAssertEqual(size.width, bounds.width, accuracy: 1, name)
         XCTAssertGreaterThan(size.height, 0, name)
         XCTAssertLessThanOrEqual(size.height, bounds.height, name)

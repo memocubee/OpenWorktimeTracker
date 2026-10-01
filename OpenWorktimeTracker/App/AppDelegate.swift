@@ -30,9 +30,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             print("[Notifications] Permission granted: \(granted)")
         }
 
-        // Initialize Sparkle updater
+        // Initialize Sparkle updater (fork: not started, so upstream releases
+        // never replace this build)
         updaterController = SPUStandardUpdaterController(
-            startingUpdater: true,
+            startingUpdater: false,
             updaterDelegate: nil,
             userDriverDelegate: nil
         )

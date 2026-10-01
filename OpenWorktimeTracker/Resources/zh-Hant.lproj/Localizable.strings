@@ -1,0 +1,211 @@
+/* MenuBarView */
+"menubar.workday" = "工作日 %@";
+"menubar.note" = "備註";
+"menubar.note.placeholder" = "今天做了什麼……";
+"menubar.pause" = "休息";
+"menubar.resume" = "回來上班";
+"menubar.endDay" = "下班打卡";
+"menubar.start" = "上班打卡";
+"menubar.restart" = "繼續上班";
+"menubar.openLogFolder" = "打開紀錄資料夾";
+"menubar.exportCSV" = "匯出 CSV…";
+"menubar.settings" = "設定…";
+"menubar.quit" = "結束程式";
+"menubar.tab" = "切換畫面";
+"menubar.tab.today" = "今天";
+"menubar.tab.records" = "紀錄";
+"menu.edit" = "編輯";
+"menu.undo" = "還原";
+"menu.redo" = "重做";
+"menu.cut" = "剪下";
+"menu.copy" = "拷貝";
+"menu.paste" = "貼上";
+"menu.selectAll" = "全選";
+"menu.window" = "視窗";
+"menu.close" = "關閉";
+"menubar.moreActions" = "更多動作";
+
+/* State Labels */
+"state.notStarted" = "還沒上班";
+"state.running" = "上班中";
+"state.paused" = "休息中";
+"state.ended" = "已下班";
+
+/* TimerDisplayView */
+"timer.netWorkTime" = "實際工時";
+
+/* MetricCardsView */
+"metric.start" = "上班";
+"metric.gross" = "總時長";
+"metric.autoBreak" = "自動扣休息";
+"metric.pause" = "休息";
+"metric.end" = "下班";
+"metric.eta" = "預計做滿";
+"metric.autoBreak.help" = "依休息規則額外自動扣掉的時間；你自己按過的休息已經算進去了。";
+"metric.target" = "目標";
+"metric.reached" = "已達成";
+"metric.editStartTime" = "修改上班時間";
+"metric.editEndTime" = "修改下班時間";
+"metric.cancel" = "取消";
+"metric.save" = "儲存";
+"metric.editPause" = "修改休息時間";
+
+/* Pause total editor */
+"pauseTotal.label" = "今天休息總共";
+"pauseTotal.hours" = "小時";
+"pauseTotal.minutes" = "分鐘";
+"pauseTotal.ok" = "好";
+"pauseTotal.pausedHint" = "現在休息中，按「回來上班」後再改休息總共多久。";
+"pauseTotal.idleNote" = "其中 %@ 是離開電腦算成的休息，要改請到「工時紀錄」。";
+"pauseTotal.error.belowIdle" = "最少要 %@（離開電腦算成的休息）。";
+"pauseTotal.error.exceedsGross" = "不能超過總時長 %@。";
+"pauseTotal.error.noWorkday" = "今天還沒上班打卡。";
+"pauseTotal.error.saveFailed" = "存不進去，檢查紀錄資料夾後再試一次。";
+
+/* WeekHistoryView */
+"history.last7days" = "最近 7 天";
+"history.noData" = "還沒有紀錄";
+"history.total" = "共 %@";
+"history.tooltip.overtime" = "超時 %1$ld 小時 %2$ld 分";
+
+/* SummaryStatsView */
+"summary.title" = "統計";
+"summary.week" = "本週";
+"summary.month" = "本月";
+"summary.noData" = "這段期間沒有資料";
+"summary.totalHours" = "總工時";
+"summary.workDays" = "上班天數";
+"summary.dailyAvg" = "每日平均";
+"summary.overtime" = "超時";
+"summary.period" = "統計期間";
+
+/* WorkHeatmapView */
+"heatmap.title" = "近 6 個月";
+"heatmap.workedDays" = "上班天數";
+"heatmap.overtimeDays" = "超時天數";
+"heatmap.average" = "平均每天";
+"heatmap.days" = "%ld 天";
+"heatmap.hours" = "%@ 小時";
+"heatmap.tooltip.date" = "%1$@（%2$@）";
+"heatmap.tooltip" = "%1$@ %2$@–%3$@・淨工時 %4$@ 小時";
+"heatmap.tooltip.empty" = "%@・沒有上班";
+"heatmap.running" = "進行中";
+"heatmap.legend.upTo" = "≤%@h";
+"heatmap.legend.between" = "%1$@–%2$@h";
+"heatmap.legend.above" = ">%@h";
+
+/* IdlePromptView */
+"idle.newWorkday" = "新的一天！";
+"idle.inactivityDetected" = "你離開電腦一陣子了";
+"idle.youWereInactive" = "你離開了 %@";
+"idle.wasWorkTime" = "算工作時間";
+"idle.wasPause" = "算休息";
+"idle.work.detail" = "例如在講電話、開會，這段照算工時。";
+"idle.pause.detail" = "這段從工時裡扣掉。";
+"idle.decisionHelp" = "這段時間要怎麼算？";
+"idle.dayActions" = "調整工作日";
+"idle.endYesterday" = "昨天算到 %@ 下班";
+"idle.startToday" = "現在開始今天";
+"idle.countAsWork" = "全部算工作時間";
+
+"idle.endDay" = "下班打卡";
+"idle.endDay.atTime" = "算 %@ 下班";
+"idle.endDay.afterHours" = "已工作 %@";
+"idle.restart" = "繼續上班";
+"idle.restart.detail" = "%@ 之後的時間算休息";
+
+/* IdlePromptWindowController */
+"idle.panel.newWorkday" = "新的一天";
+"idle.panel.inactivity" = "你離開電腦一陣子了";
+
+/* MaxHoursPromptView */
+"maxhours.title" = "工時到上限了！";
+"maxhours.body" = "你今天已經做了 %.1f 小時，要下班了嗎？";
+"maxhours.endDay" = "下班打卡";
+"maxhours.continueWorking" = "繼續做";
+"maxhours.panel.title" = "工時上限";
+
+/* NotificationManager */
+"notification.normal.title" = "今天的標準工時做滿了";
+"notification.normal.body" = "你已經做了 %.1f 小時，該收尾了～";
+
+/* ProgressBarView */
+"progress.goal" = "目標：%@";
+"notification.critical.title" = "超時了！";
+"notification.critical.body" = "你已經做了 %.1f 小時，該下班了！";
+"notification.milestone.title" = "到上限了！";
+"notification.milestone.body" = "已經工作 %.1f 小時，現在就停！";
+"notification.newDay.title" = "上班打卡";
+"notification.newDay.body" = "早安！今天的工時開始計算。";
+
+/* SettingsView */
+"settings.general" = "一般";
+"settings.notifications" = "通知";
+"settings.data" = "資料";
+"settings.appearance" = "外觀";
+"settings.orangeThreshold" = "變橘色（小時）";
+"settings.redThreshold" = "變紅色（小時）";
+"settings.autoBreak" = "自動扣休息（德國工時法規則，0 ＝ 不扣）";
+"settings.breakAfter6h" = "超過 6 小時扣（分鐘）";
+"settings.breakAfter9h" = "超過 9 小時扣（分鐘）";
+"settings.idleDetection" = "離開偵測";
+"settings.idleThreshold" = "離開多久要問（分鐘）";
+"settings.startup" = "啟動";
+"settings.launchAtLogin" = "開機自動打開";
+"settings.manualPunch" = "手動打卡（按「上班打卡」才開始算）";
+"settings.enableNotifications" = "開啟通知";
+"settings.thresholds" = "提醒門檻";
+"settings.normalHours" = "每日標準工時（小時）";
+"settings.criticalHours" = "超時警告（小時）";
+"settings.milestoneHours" = "最後通牒（小時）";
+"settings.notificationHelp" = "每個門檻一天只提醒一次。就算關掉通知，標準工時還是會用來算進度和預計下班時間。";
+"settings.logs" = "紀錄";
+"settings.openLogFolder" = "打開紀錄資料夾";
+"settings.chooseLogFolder" = "選擇紀錄資料夾…";
+"settings.cloudSync" = "雲端同步";
+"settings.syncICloud" = "同步到 iCloud 雲碟";
+"settings.iCloudConnected" = "iCloud 已連線";
+"settings.iCloudUnavailable" = "iCloud 無法使用，請先在系統設定登入。";
+"settings.syncNow" = "立即同步";
+"settings.export" = "匯出";
+"settings.exportCSV" = "匯出成 CSV…";
+"settings.about" = "關於";
+"settings.version" = "版本";
+"settings.choosePrompt" = "選擇";
+
+/* Accessibility */
+"timer.accessibility.netWorkTime" = "實際工時";
+"progress.accessibility.label" = "今日目標進度";
+"menubar.accessibility.header" = "上班狀態";
+"settings.chooseMessage" = "選一個資料夾存工時紀錄";
+
+/* LogEditor */
+"logEditor.title" = "工時紀錄";
+"logEditor.noEntries" = "沒有紀錄";
+"logEditor.selectEntry" = "選一天";
+"logEditor.unsavedChanges" = "有還沒儲存的修改";
+"logEditor.discardChanges" = "放棄修改";
+"logEditor.pauseHours" = "休息時長（小時）";
+"logEditor.pauseMinutes" = "休息時長（分鐘）";
+"logEditor.times" = "時間";
+"logEditor.start" = "上班時間";
+"logEditor.end" = "下班時間";
+"logEditor.manualPause" = "手動休息";
+"logEditor.idleDecisions" = "離開時段的判定";
+"logEditor.work" = "工作";
+"logEditor.pause" = "休息";
+"logEditor.note" = "備註";
+"logEditor.computed" = "計算結果";
+"logEditor.grossTime" = "總時長";
+"logEditor.autoBreak" = "自動扣休息";
+"logEditor.netTime" = "實際工時";
+"logEditor.save" = "儲存";
+"logEditor.delete" = "刪除這天";
+"logEditor.deleteConfirm" = "確定要刪除這一天的紀錄？";
+"menubar.logEditor" = "修改紀錄…";
+"logEditor.error.title" = "紀錄改不了";
+"logEditor.error.dismiss" = "好";
+"logEditor.error.missingEntry" = "這筆紀錄已被刪除或取代，關掉紀錄視窗再重開一次。";
+"logEditor.error.invalidTimes" = "檢查一下上班、下班和休息時間。";
+"logEditor.error.saveFailed" = "存不進去，你的修改還在。檢查紀錄資料夾後再試一次。";
+"logEditor.error.deleteFailed" = "刪不掉，紀錄沒有變動。檢查紀錄資料夾後再試一次。";

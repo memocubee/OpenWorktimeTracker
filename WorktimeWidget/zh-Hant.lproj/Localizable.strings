@@ -1,0 +1,10 @@
+/* Widget */
+"widget.state.running" = "上班中";
+"widget.state.paused" = "休息中";
+"widget.state.ended" = "已下班";
+"widget.state.idle" = "還沒上班";
+"widget.state.unavailable" = "沒有資料，請打開 OpenWorktimeTracker。";
+"widget.since" = "從 %@";
+"widget.target" = "目標 %@";
+"widget.name" = "工時";
+"widget.description" = "一眼看今天做了多久。";
