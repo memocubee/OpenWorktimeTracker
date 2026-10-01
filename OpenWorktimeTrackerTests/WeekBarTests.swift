@@ -3,7 +3,8 @@ import XCTest
 @testable import OpenWorktimeTracker
 
 /// Tests the "last 7 days" bars: they borrow the heatmap's colour levels,
-/// report only the time past the daily goal as overtime, and read oldest first.
+/// report only the time past the daily goal as overtime, and always cover the
+/// seven calendar days ending on the effective today, oldest first.
 final class WeekBarTests: XCTestCase {
 
     private let scale = HeatScale(goalHours: 8, redHours: 9.5)
@@ -65,17 +66,69 @@ final class WeekBarTests: XCTestCase {
         XCTAssertFalse(bar("2026-09-30", seconds: hours(5)).isToday)
     }
 
-    func testChartReadsOldestFirst() {
-        let newestFirst = ["2026-10-01", "2026-09-30", "2026-09-28", "2026-09-25"].map {
-            bar($0, seconds: hours(7))
+    private func localDate(_ year: Int, _ month: Int, _ day: Int, hour: Int, minute: Int = 0) -> Date {
+        Calendar.current.date(
+            from: DateComponents(year: year, month: month, day: day, hour: hour, minute: minute))!
+    }
+
+    private func week(
+        now: Date, newDayStartHour: Int = 4, logs: [String: TimeInterval]
+    ) -> [WeekBar] {
+        WeekBar.lastSevenDays(now: now, newDayStartHour: newDayStartHour, scale: scale) { date in
+            logs[date].map { WeekBar.Log(netWorkTime: $0, startTime: self.start, endTime: nil) }
         }
+    }
+
+    func testWeekAlwaysHasSevenCalendarDaysEndingToday() {
+        let bars = week(now: localDate(2026, 10, 1, hour: 10), logs: [:])
         XCTAssertEqual(
-            WeekBar.sortedChronologically(newestFirst).map(\.date),
-            ["2026-09-25", "2026-09-28", "2026-09-30", "2026-10-01"])
+            bars.map(\.date),
+            ["2026-09-25", "2026-09-26", "2026-09-27", "2026-09-28", "2026-09-29", "2026-09-30", "2026-10-01"])
+        XCTAssertEqual(bars.filter(\.isToday).map(\.date), ["2026-10-01"])
+        XCTAssertTrue(bars.last?.isToday == true, "Today is the last slot")
+        XCTAssertFalse(bars.contains(where: \.hasLog))
+    }
+
+    func testDaysWithoutALogStayAsEmptySlots() {
+        let bars = week(
+            now: localDate(2026, 10, 1, hour: 10),
+            logs: ["2026-09-26": hours(7), "2026-09-30": hours(9), "2026-08-01": hours(5)])
+        XCTAssertEqual(bars.count, 7)
+        XCTAssertEqual(bars.filter(\.hasLog).map(\.date), ["2026-09-26", "2026-09-30"])
+        XCTAssertEqual(bars.map(\.netHours), [0, 7, 0, 0, 0, 9, 0])
+
+        let gap = bars[2]
+        XCTAssertNil(gap.log)
+        XCTAssertEqual(gap.level, .none)
+        XCTAssertEqual(gap.overtime, 0)
+        XCTAssertNil(gap.overtimeHoursMinutes)
+
+        let total = bars.reduce(0) { $0 + $1.netWorkTime }
+        XCTAssertEqual(total, hours(16), "Older logs outside the window do not count")
+    }
+
+    func testBeforeTheNewDayStartHourStillCountsAsYesterday() {
+        let bars = week(now: localDate(2026, 10, 2, hour: 2), newDayStartHour: 4, logs: ["2026-10-01": hours(3)])
+        XCTAssertEqual(bars.last?.date, "2026-10-01")
+        XCTAssertTrue(bars.last?.isToday == true)
+        XCTAssertEqual(bars.first?.date, "2026-09-25")
+
+        let afterBoundary = week(now: localDate(2026, 10, 2, hour: 4), newDayStartHour: 4, logs: [:])
+        XCTAssertEqual(afterBoundary.last?.date, "2026-10-02")
+    }
+
+    func testWeekCrossesMonthAndYearBoundaries() {
+        XCTAssertEqual(
+            WeekBar.calendarDays(endingOn: "2027-01-03"),
+            ["2026-12-28", "2026-12-29", "2026-12-30", "2026-12-31", "2027-01-01", "2027-01-02", "2027-01-03"])
+        XCTAssertEqual(WeekBar.calendarDays(endingOn: "2028-03-01").first, "2028-02-24")
+        XCTAssertEqual(WeekBar.calendarDays(endingOn: "2028-03-01")[5], "2028-02-29")
     }
 
     func testFullHeightCoversTheLongestDayAndTheRedLine() {
         XCTAssertEqual(WeekBar.chartMaxHours(for: [], scale: scale), 10)
+        let allEmpty = week(now: localDate(2026, 10, 1, hour: 10), logs: [:])
+        XCTAssertEqual(WeekBar.chartMaxHours(for: allEmpty, scale: scale), 10, "An empty week still has a scale")
         XCTAssertEqual(WeekBar.chartMaxHours(for: [bar(seconds: hours(7))], scale: scale), 10)
         XCTAssertEqual(WeekBar.chartMaxHours(for: [bar(seconds: hours(12))], scale: scale), 12, accuracy: 0.001)
         let lateRedLine = HeatScale(goalHours: 9, redHours: 11)

@@ -1,7 +1,8 @@
 import SwiftUI
 
-/// The last seven Daily Logs as columns, oldest on the left. Each bar carries
-/// its Net Work Time on top and the heatmap's colour, so overtime days stand out.
+/// The last seven calendar days as columns, oldest on the left and today last.
+/// Each worked day's bar carries its Net Work Time on top and the heatmap's
+/// colour, so overtime days stand out; days without work stay as empty slots.
 struct WeekHistoryView: View {
     @Environment(WorkdayManager.self) private var manager
     @State private var bars: [WeekBar] = []
@@ -22,18 +23,10 @@ struct WeekHistoryView: View {
                     .monospacedDigit()
             }
 
-            if bars.isEmpty {
-                Text("history.noData")
-                    .font(DesignTokens.Typography.bodySmall)
-                    .foregroundStyle(DesignTokens.Colors.onSurfaceVariant)
-                    .frame(maxWidth: .infinity, alignment: .center)
-                    .padding(.vertical, DesignTokens.Spacing.sm)
-            } else {
-                let maxHours = WeekBar.chartMaxHours(for: bars, scale: manager.heatScale)
-                HStack(alignment: .bottom, spacing: DesignTokens.Spacing.xs) {
-                    ForEach(bars) { bar in
-                        DayColumn(bar: bar, maxHours: maxHours, barAreaHeight: Self.barAreaHeight)
-                    }
+            let maxHours = WeekBar.chartMaxHours(for: bars, scale: manager.heatScale)
+            HStack(alignment: .bottom, spacing: DesignTokens.Spacing.xs) {
+                ForEach(bars) { bar in
+                    DayColumn(bar: bar, maxHours: maxHours, barAreaHeight: Self.barAreaHeight)
                 }
             }
         }
@@ -42,18 +35,16 @@ struct WeekHistoryView: View {
     }
 
     private func loadHistory() {
-        let scale = manager.heatScale
-        let today = Date().dateString
-        bars = WeekBar.sortedChronologically(
-            manager.persistence.loadLastDays(7).map { entry in
-                WeekBar(
-                    date: entry.date,
+        bars = WeekBar.lastSevenDays(
+            now: manager.clock.now, newDayStartHour: manager.newDayStartHour, scale: manager.heatScale
+        ) { date in
+            manager.store.load(for: date).map { entry in
+                WeekBar.Log(
                     netWorkTime: manager.workday(for: entry).netWorkTime,
                     startTime: entry.startTime,
-                    endTime: entry.endTime,
-                    scale: scale,
-                    today: today)
-            })
+                    endTime: entry.endTime)
+            }
+        }
     }
 
     private var weekTotal: String {
@@ -76,15 +67,14 @@ private struct DayColumn: View {
             // Bar with its hours sitting right above it
             VStack(spacing: 2) {
                 Spacer(minLength: 0)
-                Text(bar.netWorkTime.hoursMinutesFormatted)
+                Text(bar.hasLog ? bar.netWorkTime.hoursMinutesFormatted : "—")
                     .font(.system(size: 10, weight: .semibold))
-                    .foregroundStyle(
-                        bar.level >= .overtime ? bar.level.color : DesignTokens.Colors.onSurface)
+                    .foregroundStyle(hoursColor)
                     .monospacedDigit()
                     .lineLimit(1)
                     .fixedSize()
                 RoundedRectangle(cornerRadius: 3)
-                    .fill(bar.level.color)
+                    .fill(bar.hasLog ? bar.level.color : DesignTokens.Colors.onSurfaceVariant.opacity(0.18))
                     .frame(height: barHeight)
                     .overlay {
                         if bar.isToday {
@@ -114,8 +104,13 @@ private struct DayColumn: View {
         .accessibilityLabel(Text(tooltip))
     }
 
+    private var hoursColor: Color {
+        guard bar.hasLog else { return DesignTokens.Colors.onSurfaceVariant.opacity(0.6) }
+        return bar.level >= .overtime ? bar.level.color : DesignTokens.Colors.onSurface
+    }
+
     private var barHeight: CGFloat {
-        guard bar.netHours > 0, maxHours > 0 else { return 3 }
+        guard bar.hasLog, bar.netHours > 0, maxHours > 0 else { return 3 }
         return max(3, barAreaHeight * CGFloat(min(1, bar.netHours / maxHours)))
     }
 
@@ -124,8 +119,12 @@ private struct DayColumn: View {
     }
 
     private var tooltip: String {
+        guard let log = bar.log else {
+            return String(
+                format: String(localized: "heatmap.tooltip.empty"), WorkHeatmapView.tooltipDate(day))
+        }
         let summary = WorkHeatmapView.tooltip(
-            date: day, startTime: bar.startTime, endTime: bar.endTime, netHours: bar.netHours)
+            date: day, startTime: log.startTime, endTime: log.endTime, netHours: bar.netHours)
         guard let overtime = bar.overtimeHoursMinutes else { return summary }
         return summary + "\n"
             + String(format: String(localized: "history.tooltip.overtime"), overtime.hours, overtime.minutes)
