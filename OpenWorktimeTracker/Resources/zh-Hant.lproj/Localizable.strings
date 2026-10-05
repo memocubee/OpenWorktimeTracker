@@ -93,7 +93,6 @@
 /* WorkHeatmapView */
 "heatmap.title" = "近 6 個月";
 "heatmap.workedDays" = "上班天數";
-"heatmap.overtimeDays" = "超時天數";
 "heatmap.average" = "平均每天";
 "heatmap.days" = "%ld 天";
 "heatmap.hours" = "%@ 小時";

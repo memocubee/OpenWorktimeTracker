@@ -93,7 +93,6 @@
 /* WorkHeatmapView */
 "heatmap.title" = "LETZTE 6 MONATE";
 "heatmap.workedDays" = "Arbeitstage";
-"heatmap.overtimeDays" = "Überstundentage";
 "heatmap.average" = "Ø pro Tag";
 "heatmap.days" = "%ld Tage";
 "heatmap.hours" = "%@ Std.";

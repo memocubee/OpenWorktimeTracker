@@ -58,11 +58,6 @@ struct WorkHeatmapView: View {
                 value: String(format: String(localized: "heatmap.days"), stats.workedDays)
             )
             HeatmapStat(
-                label: String(localized: "heatmap.overtimeDays"),
-                value: String(format: String(localized: "heatmap.days"), stats.overtimeDays),
-                valueColor: stats.overtimeDays > 0 ? DesignTokens.Colors.accentOrange : nil
-            )
-            HeatmapStat(
                 label: String(localized: "heatmap.average"),
                 value: String(format: String(localized: "heatmap.hours"), Self.hours(stats.averageHours))
             )
@@ -290,7 +285,6 @@ extension HeatLevel {
 private struct HeatmapStat: View {
     let label: String
     let value: String
-    var valueColor: Color?
 
     var body: some View {
         VStack(spacing: 2) {
@@ -299,7 +293,7 @@ private struct HeatmapStat: View {
                 .foregroundStyle(DesignTokens.Colors.onSurfaceVariant)
             Text(value)
                 .font(DesignTokens.Typography.labelLarge)
-                .foregroundStyle(valueColor ?? DesignTokens.Colors.onSurface)
+                .foregroundStyle(DesignTokens.Colors.onSurface)
                 .monospacedDigit()
         }
         .frame(maxWidth: .infinity)

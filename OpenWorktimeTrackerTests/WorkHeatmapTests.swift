@@ -105,7 +105,7 @@ final class WorkHeatmapTests: XCTestCase {
 
     // MARK: - Stats
 
-    func testStatsCountWorkedAndOvertimeDaysAndAverageTheWorkedOnes() {
+    func testStatsCountWorkedDaysAndAverageThem() {
         let heatmap = WorkHeatmap(
             logs: [
                 log("2026-09-01", hours: 5),
@@ -117,7 +117,6 @@ final class WorkHeatmapTests: XCTestCase {
             scale: scale, today: today)
 
         XCTAssertEqual(heatmap.stats.workedDays, 4)
-        XCTAssertEqual(heatmap.stats.overtimeDays, 2, "Exactly the goal is not overtime")
         XCTAssertEqual(heatmap.stats.averageHours, (5 + 8.5 + 10 + 8) / 4, accuracy: 0.0001)
     }
 
@@ -126,13 +125,13 @@ final class WorkHeatmapTests: XCTestCase {
             logs: [log("2025-01-10", hours: 12), log("2026-09-23", hours: 6), log("2026-09-30", hours: 11)],
             scale: scale, today: today)
 
-        XCTAssertEqual(heatmap.stats, HeatmapStats(workedDays: 1, overtimeDays: 0, averageHours: 6))
+        XCTAssertEqual(heatmap.stats, HeatmapStats(workedDays: 1, averageHours: 6))
     }
 
     func testStatsAreZeroWithoutLogs() {
         let heatmap = WorkHeatmap(logs: [], scale: scale, today: today)
 
-        XCTAssertEqual(heatmap.stats, HeatmapStats(workedDays: 0, overtimeDays: 0, averageHours: 0))
+        XCTAssertEqual(heatmap.stats, HeatmapStats(workedDays: 0, averageHours: 0))
         XCTAssertTrue(heatmap.weeks.joined().allSatisfy { !$0.isTracked })
     }
 

@@ -93,7 +93,6 @@
 /* WorkHeatmapView */
 "heatmap.title" = "LAST 6 MONTHS";
 "heatmap.workedDays" = "Days Worked";
-"heatmap.overtimeDays" = "Overtime Days";
 "heatmap.average" = "Avg per Day";
 "heatmap.days" = "%ld days";
 "heatmap.hours" = "%@ h";

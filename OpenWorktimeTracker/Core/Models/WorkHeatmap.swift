@@ -77,7 +77,6 @@ struct HeatmapDay: Equatable, Identifiable {
 /// Totals over every tracked day on the heatmap.
 struct HeatmapStats: Equatable {
     let workedDays: Int
-    let overtimeDays: Int
     let averageHours: Double
 }
 
@@ -151,15 +150,14 @@ struct WorkHeatmap {
             weeks.append(column)
         }
         self.weeks = weeks
-        self.stats = Self.stats(for: tracked, scale: scale)
+        self.stats = Self.stats(for: tracked)
     }
 
-    static func stats(for days: [HeatmapDay], scale: HeatScale) -> HeatmapStats {
+    static func stats(for days: [HeatmapDay]) -> HeatmapStats {
         let worked = days.filter { $0.netHours > 0 }
         let total = worked.reduce(0) { $0 + $1.netHours }
         return HeatmapStats(
             workedDays: worked.count,
-            overtimeDays: worked.filter { $0.netHours > scale.goalHours }.count,
             averageHours: worked.isEmpty ? 0 : total / Double(worked.count)
         )
     }
