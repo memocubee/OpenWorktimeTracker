@@ -273,17 +273,20 @@ struct TodayTabView: View {
 /// History: the six-month heatmap first, then the last seven days, then the
 /// week or month totals.
 struct RecordsTabView: View {
+    /// The week paged to above, which the summary's week totals follow.
+    @State private var weekOffset = 0
+
     var body: some View {
         VStack(alignment: .leading, spacing: DesignTokens.Spacing.lg) {
             WorkHeatmapView()
 
             Divider().opacity(0.15)
 
-            WeekHistoryView()
+            WeekHistoryView(offset: $weekOffset)
 
             Divider().opacity(0.15)
 
-            SummaryStatsView()
+            SummaryStatsView(weekOffset: weekOffset)
         }
     }
 }

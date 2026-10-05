@@ -130,6 +130,14 @@ final class WeekBarTests: XCTestCase {
         XCTAssertEqual(newYear.lastDate, "2027-01-03")
     }
 
+    func testBoundsAreTheMondayAndSundayOfTheOffsetWeek() {
+        XCTAssertEqual(WorkWeek.bounds(offset: 0, today: "2026-10-07")?.first, "2026-10-05")
+        XCTAssertEqual(WorkWeek.bounds(offset: 0, today: "2026-10-07")?.last, "2026-10-11")
+        XCTAssertEqual(WorkWeek.bounds(offset: -1, today: "2026-10-07")?.first, "2026-09-28")
+        XCTAssertEqual(WorkWeek.bounds(offset: -1, today: "2026-10-07")?.last, "2026-10-04")
+        XCTAssertNil(WorkWeek.bounds(offset: 0, today: "nope"))
+    }
+
     func testExpectedHoursLeaveOutPublicHolidays() {
         let national = week(now: localDate(2026, 10, 7, hour: 10))
         XCTAssertEqual(national.workingDays, 4)

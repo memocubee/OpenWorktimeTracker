@@ -83,6 +83,7 @@
 "summary.title" = "統計";
 "summary.week" = "本週";
 "summary.month" = "本月";
+"summary.weekOf" = "%@ 那週";
 "summary.noData" = "這段期間沒有資料";
 "summary.totalHours" = "總工時";
 "summary.workDays" = "上班天數";

@@ -1,20 +1,17 @@
 import SwiftUI
 
 /// One Monday-to-Sunday week at a time, this week first, paged with arrows.
+/// The page is shared with the summary below, so both show the same week.
 /// The header weighs Net Work Time against the week's Expected Hours, the
 /// columns carry the heatmap's colours, and Public Holidays are called out so
 /// it is clear which days are meant to be off.
 struct WeekHistoryView: View {
     @Environment(WorkdayManager.self) private var manager
-    @State private var offset: Int
+    /// Weeks from this one: 0 is this week, -1 last week.
+    @Binding var offset: Int
     @State private var week: WorkWeek?
 
     private static let barAreaHeight: CGFloat = 52
-
-    /// `initialOffset` weeks from this one: -1 opens on last week.
-    init(initialOffset: Int = 0) {
-        _offset = State(initialValue: min(0, initialOffset))
-    }
 
     var body: some View {
         // Until the first load lands, read the week directly so the first frame is complete

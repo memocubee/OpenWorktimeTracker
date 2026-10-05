@@ -83,6 +83,7 @@
 "summary.title" = "ZUSAMMENFASSUNG";
 "summary.week" = "Woche";
 "summary.month" = "Monat";
+"summary.weekOf" = "Woche ab %@";
 "summary.noData" = "Keine Daten für diesen Zeitraum";
 "summary.totalHours" = "Gesamt";
 "summary.workDays" = "Arbeitstage";

@@ -88,7 +88,7 @@ struct WorkWeek: Equatable {
     static func week(
         offset: Int, today: String, scale: HeatScale, holidays: HolidayCalendar, log: (String) -> WeekBar.Log?
     ) -> WorkWeek {
-        let monday = DayString.monday(of: today).flatMap { DayString.adding(offset * 7, to: $0) }
+        let monday = bounds(offset: offset, today: today)?.first
         let days = monday.map { start in (0..<7).compactMap { DayString.adding($0, to: start) } } ?? []
         let bars = days.map { date in
             WeekBar(date: date, log: log(date), scale: scale, today: today, holidays: holidays)
@@ -96,6 +96,14 @@ struct WorkWeek: Equatable {
         return WorkWeek(
             bars: bars, offset: offset,
             expected: Double(bars.filter(\.isWorkingDay).count) * scale.goalHours * 3600)
+    }
+
+    /// Monday and Sunday of the week `offset` weeks from the one containing `today`.
+    static func bounds(offset: Int, today: String) -> (first: String, last: String)? {
+        guard let monday = DayString.monday(of: today).flatMap({ DayString.adding(offset * 7, to: $0) }),
+            let sunday = DayString.adding(6, to: monday)
+        else { return nil }
+        return (monday, sunday)
     }
 
     /// Expected Hours for the working days from `first` through `last`.

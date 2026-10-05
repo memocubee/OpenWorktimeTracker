@@ -83,6 +83,7 @@
 "summary.title" = "SUMMARY";
 "summary.week" = "Week";
 "summary.month" = "Month";
+"summary.weekOf" = "Week of %@";
 "summary.noData" = "No data for this period";
 "summary.totalHours" = "Total Hours";
 "summary.workDays" = "Work Days";
