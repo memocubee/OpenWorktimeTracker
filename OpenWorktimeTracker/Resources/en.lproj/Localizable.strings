@@ -11,6 +11,9 @@
 "menubar.exportCSV" = "Export CSV...";
 "menubar.settings" = "Settings...";
 "menubar.quit" = "Quit";
+"menubar.tab" = "View";
+"menubar.tab.today" = "Today";
+"menubar.tab.records" = "History";
 "menu.edit" = "Edit";
 "menu.undo" = "Undo";
 "menu.redo" = "Redo";
@@ -45,22 +48,63 @@
 "metric.editEndTime" = "Edit End Time";
 "metric.cancel" = "Cancel";
 "metric.save" = "Save";
+"metric.editPause" = "Edit Break Time";
+
+/* Pause total editor */
+"pauseTotal.label" = "Total break today";
+"pauseTotal.hours" = "h";
+"pauseTotal.minutes" = "min";
+"pauseTotal.ok" = "OK";
+"pauseTotal.pausedHint" = "You're on a break right now. Resume work first, then edit the total.";
+"pauseTotal.idleNote" = "%@ of this is away time counted as a break; change that in the Work Time Log.";
+"pauseTotal.error.belowIdle" = "At least %@ (away time counted as a break).";
+"pauseTotal.error.exceedsGross" = "Can't be more than the gross time of %@.";
+"pauseTotal.error.noWorkday" = "No workday started today.";
+"pauseTotal.error.saveFailed" = "Couldn't save. Check the log folder and try again.";
 
 /* WeekHistoryView */
-"history.last7days" = "LAST 7 DAYS";
 "history.noData" = "No history yet";
-"history.total" = "%@ total";
+"history.tooltip.overtime" = "%1$ldh %2$ldm over goal";
+"week.thisWeek" = "This week";
+"week.lastWeek" = "Last week";
+"week.previous" = "Previous week";
+"week.next" = "Next week";
+"week.backToThisWeek" = "Back to this week";
+"week.workedOfExpected" = "%1$@ of %2$@";
+"week.expected.help" = "Expected: %1$ld working days × %2$@ h (public holidays off)";
+"week.remaining" = "%@ to go";
+"week.over" = "+%@ over";
+"week.short" = "%@ short";
+"week.onTarget" = "On target";
+"week.dayOff" = "Day off";
+"week.holiday" = "%2$@ %1$@ %3$@";
 
 /* SummaryStatsView */
 "summary.title" = "SUMMARY";
 "summary.week" = "Week";
 "summary.month" = "Month";
+"summary.weekOf" = "Week of %@";
 "summary.noData" = "No data for this period";
 "summary.totalHours" = "Total Hours";
 "summary.workDays" = "Work Days";
 "summary.dailyAvg" = "Daily Avg";
 "summary.overtime" = "Overtime";
 "summary.period" = "Summary period";
+
+/* WorkHeatmapView */
+"heatmap.title" = "LAST 6 MONTHS";
+"heatmap.workedDays" = "Days Worked";
+"heatmap.average" = "Avg per Day";
+"heatmap.days" = "%ld days";
+"heatmap.hours" = "%@ h";
+"heatmap.tooltip.date" = "%2$@, %1$@";
+"heatmap.tooltip" = "%1$@ · %2$@–%3$@ · %4$@ h net";
+"heatmap.tooltip.empty" = "%@ · No work";
+"heatmap.running" = "now";
+"heatmap.legend.upTo" = "≤%@h";
+"heatmap.legend.between" = "%1$@–%2$@h";
+"heatmap.legend.above" = ">%@h";
+"heatmap.legend.holiday" = "Holiday";
 
 /* IdlePromptView */
 "idle.newWorkday" = "New Workday!";
@@ -176,3 +220,4 @@
 "logEditor.error.invalidTimes" = "Check the start, end and pause times.";
 "logEditor.error.saveFailed" = "The entry could not be saved locally. Your edits are still available. Check the log folder and try again.";
 "logEditor.error.deleteFailed" = "The entry could not be deleted. Tracking is unchanged. Check the log folder and try again.";
+"settings.manualPunch" = "Manual clock-in (start the day with the Start button)";

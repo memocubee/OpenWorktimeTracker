@@ -165,4 +165,85 @@ final class DailyLogFormatTests: XCTestCase {
         XCTAssertEqual(decoded.id, entry.id)
         XCTAssertEqual(decoded.endTime, entry.endTime)
     }
+
+    // MARK: - Daily Logs written by 0.7.2 (Pause intervals)
+
+    func testA072DailyLogFoldsClosedPauseIntervalsIntoTheTotal() throws {
+        let entry = try decode("""
+            {
+              "id": "3F2504E0-4F89-11D3-9A0C-0305E82C3301",
+              "date": "2026-09-30",
+              "startTime": "2026-09-30T01:00:00Z",
+              "endTime": "2026-09-30T09:00:00Z",
+              "status": "ended",
+              "manualPauseSeconds": 600,
+              "pauses": [
+                { "id": "6B29FC40-CA47-1067-B31D-00DD010662DA",
+                  "start": "2026-09-30T04:00:00Z", "end": "2026-09-30T04:30:00Z" },
+                { "id": "6B29FC40-CA47-1067-B31D-00DD010662DB",
+                  "start": "2026-09-30T08:50:00Z", "end": "2026-09-30T09:20:00Z" }
+              ],
+              "idleDecisions": [],
+              "notifiedThresholds": [],
+              "note": ""
+            }
+            """)
+
+        // 600s legacy + 30min + the 10min of the second Pause inside the Workday.
+        XCTAssertEqual(entry.manualPauseSeconds, 600 + 1800 + 600)
+        XCTAssertNil(entry.pauseStartedAt)
+        XCTAssertEqual(entry.status, .ended)
+
+        let encoder = JSONEncoder()
+        encoder.dateEncodingStrategy = .iso8601
+        let written = try XCTUnwrap(String(bytes: try encoder.encode(entry), encoding: .utf8))
+        XCTAssertFalse(written.contains("pauses"), "pauses must not be written back")
+    }
+
+    func testA072DailyLogWithOneClosedPauseAndLegacySeconds() throws {
+        let entry = try decode("""
+            {
+              "id": "3F2504E0-4F89-11D3-9A0C-0305E82C3301",
+              "date": "2026-09-30",
+              "startTime": "2026-09-30T01:00:00Z",
+              "endTime": "2026-09-30T09:00:00Z",
+              "status": "ended",
+              "manualPauseSeconds": 600,
+              "pauses": [
+                { "id": "6B29FC40-CA47-1067-B31D-00DD010662DA",
+                  "start": "2026-09-30T04:00:00Z", "end": "2026-09-30T04:30:00Z" }
+              ],
+              "idleDecisions": [],
+              "notifiedThresholds": [],
+              "note": ""
+            }
+            """)
+
+        XCTAssertEqual(entry.manualPauseSeconds, 2400)
+    }
+
+    func testA072DailyLogWithAnOpenPauseIntervalStaysPaused() throws {
+        let entry = try decode("""
+            {
+              "id": "3F2504E0-4F89-11D3-9A0C-0305E82C3301",
+              "date": "2026-09-30",
+              "startTime": "2026-09-30T01:00:00Z",
+              "status": "paused",
+              "manualPauseSeconds": 0,
+              "pauses": [
+                { "id": "6B29FC40-CA47-1067-B31D-00DD010662DA",
+                  "start": "2026-09-30T03:00:00Z", "end": "2026-09-30T03:15:00Z" },
+                { "id": "6B29FC40-CA47-1067-B31D-00DD010662DB",
+                  "start": "2026-09-30T05:00:00Z" }
+              ],
+              "idleDecisions": [],
+              "notifiedThresholds": [],
+              "note": ""
+            }
+            """)
+
+        XCTAssertEqual(entry.status, .paused)
+        XCTAssertEqual(entry.manualPauseSeconds, 900)
+        XCTAssertEqual(entry.pauseStartedAt, ISO8601DateFormatter().date(from: "2026-09-30T05:00:00Z"))
+    }
 }

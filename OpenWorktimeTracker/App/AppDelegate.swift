@@ -17,6 +17,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         }
         menuBarController = MenuBarController(manager: workdayManager)
         NSApp.mainMenu = makeMainMenu()
+        // Fetch a year's holiday calendar the bundle doesn't have yet
+        HolidayStore.shared.refreshIfNeeded()
         // Set notification delegate so banners show for this menu bar app
         let notificationCenter = UNUserNotificationCenter.current()
         notificationCenter.delegate = self
@@ -30,9 +32,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             print("[Notifications] Permission granted: \(granted)")
         }
 
-        // Initialize Sparkle updater
+        // Initialize Sparkle updater (fork: not started, so upstream releases
+        // never replace this build)
         updaterController = SPUStandardUpdaterController(
-            startingUpdater: true,
+            startingUpdater: false,
             updaterDelegate: nil,
             userDriverDelegate: nil
         )

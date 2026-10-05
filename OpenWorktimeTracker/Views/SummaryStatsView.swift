@@ -2,8 +2,12 @@ import SwiftUI
 
 struct SummaryStatsView: View {
     @Environment(WorkdayManager.self) private var manager
+    /// The week the week history is showing: 0 is this week, -1 last week.
+    var weekOffset = 0
     @State private var period: Period = .week
     @State private var entries: [TimeEntry] = []
+    /// Expected Hours for the working days of the period so far.
+    @State private var expected: TimeInterval = 0
 
     enum Period: String, CaseIterable {
         case week
@@ -28,12 +32,12 @@ struct SummaryStatsView: View {
                 Spacer()
                 Picker("summary.period", selection: $period) {
                     ForEach(Period.allCases, id: \.self) { option in
-                        Text(option.label).tag(option)
+                        periodLabel(option).tag(option)
                     }
                 }
                 .pickerStyle(.segmented)
                 .labelsHidden()
-                .frame(width: 150)
+                .frame(width: 170)
             }
 
             if entries.isEmpty {
@@ -80,42 +84,50 @@ struct SummaryStatsView: View {
         }
         .onAppear { loadEntries() }
         .onChange(of: period) { _, _ in loadEntries() }
+        .onChange(of: weekOffset) { _, _ in loadEntries() }
         .onChange(of: manager.logRevision) { _, _ in loadEntries() }
+        .onChange(of: HolidayStore.shared.calendar.years) { _, _ in loadEntries() }
     }
 
     // MARK: - Data Loading
 
+    /// The week is the Monday-to-Sunday week paged to above; the month is
+    /// this month. Neither runs past the effective today.
     private func loadEntries() {
-        let all = manager.persistence.loadAll()
-        let calendar = Calendar.current
-        let now = Date()
-
+        let today = WorkdayDetector(newDayStartHour: manager.newDayStartHour)
+            .effectiveDateString(for: manager.clock.now)
+        let range: (first: String, last: String)?
         switch period {
-        case .week:
-            guard
-                let weekStart = calendar.date(
-                    from: calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: now)
-                )
-            else {
-                entries = []
-                return
-            }
-            entries = all.filter { entry in
-                guard let date = parseDate(entry.date) else { return false }
-                return date >= weekStart && date <= now
-            }
-
-        case .month:
-            let components = calendar.dateComponents([.year, .month], from: now)
-            guard let monthStart = calendar.date(from: components) else {
-                entries = []
-                return
-            }
-            entries = all.filter { entry in
-                guard let date = parseDate(entry.date) else { return false }
-                return date >= monthStart && date <= now
-            }
+        case .week: range = WorkWeek.bounds(offset: weekOffset, today: today)
+        case .month: range = (String(today.prefix(8)) + "01", today)
         }
+        guard let range else {
+            entries = []
+            expected = 0
+            return
+        }
+        let end = min(range.last, today)
+        entries = manager.persistence.loadAll().filter { $0.date >= range.first && $0.date <= end }
+
+        // A past week owes every working day; today only once it has been started
+        let lastOwedDay =
+            end < today || entries.contains { $0.date == today } ? end : DayString.adding(-1, to: today) ?? today
+        expected = WorkWeek.expectedHours(
+            from: range.first, through: lastOwedDay, goalHours: targetHoursPerDay,
+            holidays: HolidayStore.shared.calendar)
+    }
+
+    /// 本週, 上週, or the Monday of a week further back.
+    private func periodLabel(_ option: Period) -> Text {
+        guard option == .week, weekOffset != 0 else { return Text(option.label) }
+        if weekOffset == -1 { return Text("week.lastWeek") }
+        let today = WorkdayDetector(newDayStartHour: manager.newDayStartHour)
+            .effectiveDateString(for: manager.clock.now)
+        let monday = WorkWeek.bounds(offset: weekOffset, today: today).flatMap { DayString.date($0.first) }
+        return Text(
+            String(
+                format: String(localized: "summary.weekOf"),
+                monday.map(WeekHistoryView.dateFormatter.string(from:)) ?? ""))
     }
 
     // MARK: - Computed Stats
@@ -137,22 +149,15 @@ struct SummaryStatsView: View {
         manager.notificationThresholds.normalHours
     }
 
+    /// Measured against the Expected Hours, so public holidays owe nothing
+    /// and a weekend worked counts in full.
     private var overtimeTime: TimeInterval {
-        totalTime - (Double(workDays) * targetHoursPerDay * 3600)
+        totalTime - expected
     }
 
     private var overtimeFormatted: String {
         let sign = overtimeTime >= 0 ? "+" : "-"
         return sign + abs(overtimeTime).hoursMinutesFormatted
-    }
-
-    // MARK: - Helpers
-
-    private func parseDate(_ dateString: String) -> Date? {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd"
-        formatter.locale = Locale(identifier: "en_US_POSIX")
-        return formatter.date(from: dateString)
     }
 }
 

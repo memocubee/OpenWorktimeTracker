@@ -79,6 +79,6 @@ enum DesignTokens {
     // MARK: - Popover
 
     static let popoverWidth: CGFloat = 380
-    static let popoverMinHeight: CGFloat = 640
+    static let popoverMinHeight: CGFloat = 660
     static let promptWidth: CGFloat = 380
 }

@@ -74,3 +74,15 @@ _Avoid_: Colour, severity, status
 The one JSON file per calendar date holding that day's workday, readable and
 exportable by hand.
 _Avoid_: Record, database entry, log file
+
+**Public Holiday**:
+A weekday off on Taiwan's official working-day calendar (行政機關辦公日曆表), or the
+make-up day off (補假) given when a holiday falls on a weekend. The calendar can also
+make a weekend day a working day (補行上班).
+_Avoid_: Vacation, leave, day off (that is the user's own choice)
+
+**Expected Hours**:
+The daily goal times the working days in a period — Monday to Friday, minus Public
+Holidays, plus any weekend made a working day. What a week's Net Work Time is
+measured against.
+_Avoid_: Target week, quota, Soll

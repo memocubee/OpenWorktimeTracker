@@ -4,6 +4,7 @@ struct MetricCardsView: View {
     @Environment(WorkdayManager.self) private var manager
     @State private var isEditingStart = false
     @State private var isEditingEnd = false
+    @State private var isEditingPause = false
     @State private var editedStartTime = Date()
     @State private var editedEndTime = Date()
 
@@ -36,12 +37,27 @@ struct MetricCardsView: View {
 
             // Row 2: Pauses, End/ETA
             HStack(spacing: DesignTokens.Spacing.sm) {
-                MetricCard(
-                    icon: "pause.circle",
-                    label: String(localized: "metric.pause"),
-                    value: manager.pauseTime.hoursMinutesFormatted,
-                    accent: manager.pauseTime > 0 ? DesignTokens.Colors.accentOrange : nil
-                )
+                // Pause total (tappable to edit)
+                Button {
+                    isEditingPause.toggle()
+                } label: {
+                    MetricCard(
+                        icon: "pause.circle",
+                        label: String(localized: "metric.pause"),
+                        value: manager.pauseTime.hoursMinutesFormatted,
+                        accent: manager.pauseTime > 0 ? DesignTokens.Colors.accentOrange : nil,
+                        isEditable: true
+                    )
+                }
+                .buttonStyle(.plain)
+                .disabled(manager.currentEntry == nil)
+                .help(Text("metric.editPause"))
+                .popover(isPresented: $isEditingPause, arrowEdge: .bottom) {
+                    PauseTotalEditor(initialTotal: manager.pauseTime) {
+                        isEditingPause = false
+                    }
+                    .environment(manager)
+                }
 
                 if manager.state == .ended {
                     // End time (tappable to edit)

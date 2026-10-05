@@ -10,11 +10,6 @@ struct SettingsView: View {
     @AppStorage(AppSettingsKey.redThresholdHours) private var redThreshold = AppDefaults
         .redThresholdHours
 
-    // ArbZG Breaks
-    @AppStorage(AppSettingsKey.breakAfter6hMinutes) private var break6h = AppDefaults
-        .breakAfter6hMinutes
-    @AppStorage(AppSettingsKey.breakAfter9hMinutes) private var break9h = AppDefaults
-        .breakAfter9hMinutes
 
     // Notifications
     @AppStorage(AppSettingsKey.notificationsEnabled) private var notificationsEnabled = AppDefaults
@@ -31,6 +26,8 @@ struct SettingsView: View {
         .idleThresholdMinutes
 
     // Startup
+    @AppStorage(AppSettingsKey.manualPunchMode) private var manualPunchMode = AppDefaults
+        .manualPunchMode
     @State private var launchAtLogin = AppDelegate.isLaunchAtLoginEnabled
 
     // Cloud
@@ -92,35 +89,6 @@ struct SettingsView: View {
                 }
             }
 
-            Section(String(localized: "settings.autoBreak")) {
-                HStack {
-                    Text("settings.breakAfter6h")
-                    Spacer()
-                    TextField("settings.breakAfter6h", value: $break6h, format: .number)
-                        .labelsHidden()
-                        .frame(width: 60)
-                        .multilineTextAlignment(.trailing)
-                        .onChange(of: break6h) { _, newValue in
-                            break6h = max(0, min(300, newValue))
-                            break9h = max(break9h, break6h)
-                        }
-                }
-                HStack {
-                    Text("settings.breakAfter9h")
-                    Spacer()
-                    TextField("settings.breakAfter9h", value: $break9h, format: .number)
-                        .labelsHidden()
-                        .frame(width: 60)
-                        .multilineTextAlignment(.trailing)
-                        .onChange(of: break9h) { _, newValue in
-                            break9h = max(0, min(300, newValue))
-                            if break9h < break6h {
-                                break9h = break6h
-                            }
-                        }
-                }
-            }
-
             Section(String(localized: "settings.idleDetection")) {
                 HStack {
                     Text("settings.idleThreshold")
@@ -136,6 +104,7 @@ struct SettingsView: View {
             }
 
             Section(String(localized: "settings.startup")) {
+                Toggle(String(localized: "settings.manualPunch"), isOn: $manualPunchMode)
                 Toggle(String(localized: "settings.launchAtLogin"), isOn: $launchAtLogin)
                     .onChange(of: launchAtLogin) { _, newValue in
                         AppDelegate.setLaunchAtLogin(newValue)
