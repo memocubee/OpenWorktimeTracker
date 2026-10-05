@@ -11,7 +11,8 @@ struct WorkHeatmapView: View {
     private static let weekdayLabelWidth: CGFloat = 14
 
     var body: some View {
-        let heatmap = WorkHeatmap(logs: logs, scale: manager.heatScale, today: Date())
+        let heatmap = WorkHeatmap(
+            logs: logs, scale: manager.heatScale, today: Date(), holidays: HolidayStore.shared.calendar)
 
         VStack(alignment: .leading, spacing: DesignTokens.Spacing.sm) {
             Text("heatmap.title")
@@ -126,6 +127,9 @@ struct WorkHeatmapView: View {
         let goal = Self.hours(scale.goalHours)
         let red = Self.hours(scale.redHours)
         return HStack(spacing: DesignTokens.Spacing.xs) {
+            HeatmapSwatch(level: .none, size: Self.cellSize, isHoliday: true)
+            legendLabel(String(localized: "heatmap.legend.holiday"))
+            Spacer(minLength: DesignTokens.Spacing.sm)
             ForEach([HeatLevel.none, .light, .medium, .deep], id: \.self) { level in
                 HeatmapSwatch(level: level, size: Self.cellSize)
             }
@@ -211,9 +215,15 @@ private struct HeatmapCell: View {
     var body: some View {
         Group {
             if day.isTracked {
-                HeatmapSwatch(level: day.level, size: size)
+                HeatmapSwatch(level: day.level, size: size, isHoliday: day.holiday != nil)
                     .help(tooltip)
                     .accessibilityLabel(Text(tooltip))
+            } else if let holiday = day.holiday {
+                // A day off still ahead (or before the first log) stays visible
+                RoundedRectangle(cornerRadius: 2)
+                    .strokeBorder(DesignTokens.Colors.accentBlue, lineWidth: 1.5)
+                    .frame(width: size, height: size)
+                    .help(WorkHeatmapView.tooltipDate(day.date) + "\n" + WeekHistoryView.holidayName(holiday))
             } else {
                 // Outside the tracked range: in the future, or before the first log
                 RoundedRectangle(cornerRadius: 2)
@@ -225,12 +235,15 @@ private struct HeatmapCell: View {
     }
 
     private var tooltip: String {
-        guard let log = day.log, log.netHours > 0 else {
-            return String(
+        let summary: String
+        if let log = day.log, log.netHours > 0 {
+            summary = WorkHeatmapView.tooltip(
+                date: day.date, startTime: log.startTime, endTime: log.endTime, netHours: log.netHours)
+        } else {
+            summary = String(
                 format: String(localized: "heatmap.tooltip.empty"), WorkHeatmapView.tooltipDate(day.date))
         }
-        return WorkHeatmapView.tooltip(
-            date: day.date, startTime: log.startTime, endTime: log.endTime, netHours: log.netHours)
+        return day.holiday.map { summary + "\n" + WeekHistoryView.holidayName($0) } ?? summary
     }
 }
 
@@ -239,11 +252,19 @@ private struct HeatmapCell: View {
 private struct HeatmapSwatch: View {
     let level: HeatLevel
     let size: CGFloat
+    /// Ringed in blue: a Public Holiday or make-up day off.
+    var isHoliday = false
 
     var body: some View {
         RoundedRectangle(cornerRadius: 2)
             .fill(level.color)
             .frame(width: size, height: size)
+            .overlay {
+                if isHoliday {
+                    RoundedRectangle(cornerRadius: 2)
+                        .strokeBorder(DesignTokens.Colors.accentBlue, lineWidth: 1.5)
+                }
+            }
     }
 }
 

@@ -63,10 +63,21 @@
 "pauseTotal.error.saveFailed" = "Couldn't save. Check the log folder and try again.";
 
 /* WeekHistoryView */
-"history.last7days" = "LAST 7 DAYS";
 "history.noData" = "No history yet";
-"history.total" = "%@ total";
 "history.tooltip.overtime" = "%1$ldh %2$ldm over goal";
+"week.thisWeek" = "This week";
+"week.lastWeek" = "Last week";
+"week.previous" = "Previous week";
+"week.next" = "Next week";
+"week.backToThisWeek" = "Back to this week";
+"week.workedOfExpected" = "%1$@ of %2$@";
+"week.expected.help" = "Expected: %1$ld working days × %2$@ h (public holidays off)";
+"week.remaining" = "%@ to go";
+"week.over" = "+%@ over";
+"week.short" = "%@ short";
+"week.onTarget" = "On target";
+"week.dayOff" = "Day off";
+"week.holiday" = "%2$@ %1$@ %3$@";
 
 /* SummaryStatsView */
 "summary.title" = "SUMMARY";
@@ -93,6 +104,7 @@
 "heatmap.legend.upTo" = "≤%@h";
 "heatmap.legend.between" = "%1$@–%2$@h";
 "heatmap.legend.above" = ">%@h";
+"heatmap.legend.holiday" = "Holiday";
 
 /* IdlePromptView */
 "idle.newWorkday" = "New Workday!";

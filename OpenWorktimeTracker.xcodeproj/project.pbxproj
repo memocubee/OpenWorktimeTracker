@@ -11,7 +11,9 @@
 		094A334F0B271C5B05ADCA45 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = 46369458646495B6F3C7B84D /* Sparkle */; };
 		09742B896CA7EB3ED436018E /* IdleDetectorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E368E8701FFBF179A415BBF /* IdleDetectorTests.swift */; };
 		0A9796F1549A59EC38DAE952 /* GlobalShortcutManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8316E37B0FE467EDC5CE6E6D /* GlobalShortcutManager.swift */; };
+		0C2C0AEF3985671EE375AFA1 /* taiwan-calendar-2025.json in Resources */ = {isa = PBXBuildFile; fileRef = 1A5AAEF5D22A8ED718240DA4 /* taiwan-calendar-2025.json */; };
 		0D3BA242E6C837790469B04F /* LogEntryEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5351C1EB6221F54A7FC64A02 /* LogEntryEditView.swift */; };
+		0EB52A16C9F9492F764F768A /* taiwan-calendar-2027.json in Resources */ = {isa = PBXBuildFile; fileRef = 445F96E2D29AE522296A1C66 /* taiwan-calendar-2027.json */; };
 		15061C70D45A5BEF76336071 /* SummaryStatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5202C6AD0AF52C2D73DC6E17 /* SummaryStatsView.swift */; };
 		1B216F8F5496AF19EAA77D46 /* WorkHeatmapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F4732C544320EFB42C2391A /* WorkHeatmapTests.swift */; };
 		1B79975C47A5A02EA362783A /* WeekBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B0E7DA5727BAF47E48DDE8 /* WeekBar.swift */; };
@@ -32,6 +34,7 @@
 		3C023C1963125F860E660730 /* BreakCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14FD2343077B9FC533EAC07 /* BreakCalculator.swift */; };
 		3CA50EE21B7AC6011D3894E4 /* WorkdayAppearanceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F4BA3205F0AF90FC0891C71 /* WorkdayAppearanceTests.swift */; };
 		3D60D0048DED858DE6BB52DA /* PersistenceManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB0E2224DEF41A69EC1E92AA /* PersistenceManagerTests.swift */; };
+		3E14285BF4BFC31726ED2024 /* HolidayCalendarTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F211E2156CD30DBFA339D6A /* HolidayCalendarTests.swift */; };
 		3F944373B6FF10C633D2D18C /* WorkdayAppearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095CE1EE123ADDDAF03A6250 /* WorkdayAppearance.swift */; };
 		4352E3077EFA1D9BDA71E053 /* WorkdayManagerSettingsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99AEB2B7772C3768CB0B7B4B /* WorkdayManagerSettingsTests.swift */; };
 		44EFF479547F25448ADD540B /* WeekHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1089C3A7EF27586EB233E4B /* WeekHistoryView.swift */; };
@@ -67,6 +70,7 @@
 		A37E2A4BE6EA5DF1F0FBA60B /* ProgressBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC1763B590C81EB59DF0B300 /* ProgressBarView.swift */; };
 		A46982C34CFF559FED894D6F /* MaxHoursPromptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7255E8D3611E793FAB71F0AC /* MaxHoursPromptView.swift */; };
 		A8E0E039463DA1368A46C035 /* ManualClock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA9BCF5F1EEE511993757D7 /* ManualClock.swift */; };
+		ABEAA20E94CF9E83BDECCA99 /* taiwan-calendar-2026.json in Resources */ = {isa = PBXBuildFile; fileRef = C2B4B1A60606B9A536351C11 /* taiwan-calendar-2026.json */; };
 		ADE593C4C405609F5F1B3894 /* WorkdayManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C770EF5C2029076BF88AF474 /* WorkdayManagerTests.swift */; };
 		AEE1E6715AC00AE314B9D854 /* OpenWorktimeTrackerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90A98A9F938927C616301EA5 /* OpenWorktimeTrackerApp.swift */; };
 		B2942C9DBBAD0D5F95307152 /* MenuBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B2CA010B0A3CBEDC5FA6F9 /* MenuBarView.swift */; };
@@ -82,11 +86,13 @@
 		D0BA8C03FE5E382A0104E788 /* WorkdayDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB71FDA60A573DB4F2C4E3D6 /* WorkdayDetector.swift */; };
 		D0C5E94C8A43326CE27D71E0 /* LogEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78CD4A8501FEDAAE565AEAC8 /* LogEditorView.swift */; };
 		D863CFEDBAC6400A74C1551F /* AppIcon.svg in Resources */ = {isa = PBXBuildFile; fileRef = 8CF945626AE912CB62BC84CD /* AppIcon.svg */; };
+		DD92DCBD13D8BC4DB0046C20 /* HolidayCalendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7170921CADDDA0AC2A3772F3 /* HolidayCalendar.swift */; };
 		E0443815B9C168D11602B14F /* WorkdayManagerTotalPauseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BA00229D1AC352A6804A4B6 /* WorkdayManagerTotalPauseTests.swift */; };
 		E2776F062926941396F6798E /* DailyLogFormatTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0534E968BFC7EE74714A15B /* DailyLogFormatTests.swift */; };
 		E7DB5A1B699217F6B7749C2E /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC7D8E211502FB3F2B407C29 /* SettingsView.swift */; };
 		EC00E2796568DA67817EE450 /* ThresholdLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54E2CD75761D381C44EA86DA /* ThresholdLevel.swift */; };
 		F126499AA55A6EDAF3159528 /* WorkdayState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEBF376EB97AAD16E97B1D48 /* WorkdayState.swift */; };
+		F45C32168C71402DC627F782 /* HolidayStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EF6C80FE4DE73B81D87133A /* HolidayStore.swift */; };
 		F7E3DD2397658080B1E1FAA2 /* ViewLayoutTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE8B1A4B3C062AB86A0362C /* ViewLayoutTests.swift */; };
 		F9CEAFEDD47DBEF79E904301 /* PersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F26F3D087AB990B78FB7094 /* PersistenceManager.swift */; };
 		FAA1B14DC80293F0B721C180 /* DailyLogStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C8B5661F461CF5F7351190 /* DailyLogStore.swift */; };
@@ -135,6 +141,7 @@
 		0E7D73A4BB2ACE5955D1E84A /* OpenWorktimeTrackerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OpenWorktimeTrackerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0EEEFF607EEBE5390F88EB0B /* LogEditorWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogEditorWindowController.swift; sourceTree = "<group>"; };
 		15F818FB696E0038F88C3B05 /* IdlePeriod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdlePeriod.swift; sourceTree = "<group>"; };
+		1A5AAEF5D22A8ED718240DA4 /* taiwan-calendar-2025.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "taiwan-calendar-2025.json"; sourceTree = "<group>"; };
 		1ED914F58E92DF73CF1547A3 /* Color+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extensions.swift"; sourceTree = "<group>"; };
 		234A384CE4770836D7D1485C /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		2BA00229D1AC352A6804A4B6 /* WorkdayManagerTotalPauseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkdayManagerTotalPauseTests.swift; sourceTree = "<group>"; };
@@ -143,6 +150,7 @@
 		33B0E7DA5727BAF47E48DDE8 /* WeekBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekBar.swift; sourceTree = "<group>"; };
 		33B9F7CAAC70B234FABD39A1 /* WidgetSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetSnapshotTests.swift; sourceTree = "<group>"; };
 		3F4732C544320EFB42C2391A /* WorkHeatmapTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkHeatmapTests.swift; sourceTree = "<group>"; };
+		445F96E2D29AE522296A1C66 /* taiwan-calendar-2027.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "taiwan-calendar-2027.json"; sourceTree = "<group>"; };
 		45F2ACA48F78D1F82D64377D /* WorkdayManagerNotificationThresholdTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkdayManagerNotificationThresholdTests.swift; sourceTree = "<group>"; };
 		47E5CA659F0918F09E3A2B2E /* WorkdayManagerClockAndStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkdayManagerClockAndStoreTests.swift; sourceTree = "<group>"; };
 		4AA9BCF5F1EEE511993757D7 /* ManualClock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManualClock.swift; sourceTree = "<group>"; };
@@ -158,6 +166,8 @@
 		63FDA92C95403622A35BE0F3 /* WorkdayManagerLifecycleAndMutationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkdayManagerLifecycleAndMutationTests.swift; sourceTree = "<group>"; };
 		652C1192D957C6B1AA70B815 /* Workday.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Workday.swift; sourceTree = "<group>"; };
 		65D365D24EC89B5F03E63743 /* IdlePromptWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdlePromptWindowController.swift; sourceTree = "<group>"; };
+		6EF6C80FE4DE73B81D87133A /* HolidayStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HolidayStore.swift; sourceTree = "<group>"; };
+		7170921CADDDA0AC2A3772F3 /* HolidayCalendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HolidayCalendar.swift; sourceTree = "<group>"; };
 		7255E8D3611E793FAB71F0AC /* MaxHoursPromptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaxHoursPromptView.swift; sourceTree = "<group>"; };
 		75C10AE9B003B0EC21B18010 /* DesignTokens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignTokens.swift; sourceTree = "<group>"; };
 		78CD4A8501FEDAAE565AEAC8 /* LogEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogEditorView.swift; sourceTree = "<group>"; };
@@ -179,6 +189,7 @@
 		92ECFCF3E46C5163E13E2DBE /* WorktimeWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.extensionkit-extension"; includeInIndex = 0; path = WorktimeWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		96852475F3CF42C080C27424 /* TimeEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeEntry.swift; sourceTree = "<group>"; };
 		99AEB2B7772C3768CB0B7B4B /* WorkdayManagerSettingsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkdayManagerSettingsTests.swift; sourceTree = "<group>"; };
+		9F211E2156CD30DBFA339D6A /* HolidayCalendarTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HolidayCalendarTests.swift; sourceTree = "<group>"; };
 		9F4BA3205F0AF90FC0891C71 /* WorkdayAppearanceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkdayAppearanceTests.swift; sourceTree = "<group>"; };
 		A3636564F038D5714D3F2E9D /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
 		A504CCBF9BE58EA9A65A32F7 /* InMemoryDailyLogStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InMemoryDailyLogStore.swift; sourceTree = "<group>"; };
@@ -199,6 +210,7 @@
 		BE27F160308976C1903EB127 /* AutoBreakRules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoBreakRules.swift; sourceTree = "<group>"; };
 		BEBF376EB97AAD16E97B1D48 /* WorkdayState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkdayState.swift; sourceTree = "<group>"; };
 		C14FD2343077B9FC533EAC07 /* BreakCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreakCalculator.swift; sourceTree = "<group>"; };
+		C2B4B1A60606B9A536351C11 /* taiwan-calendar-2026.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "taiwan-calendar-2026.json"; sourceTree = "<group>"; };
 		C770EF5C2029076BF88AF474 /* WorkdayManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkdayManagerTests.swift; sourceTree = "<group>"; };
 		C8CBF6F9629F77799CD434AF /* GlassContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlassContainer.swift; sourceTree = "<group>"; };
 		CA1B7072C1ED5F1279DE5285 /* IdleThreshold.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdleThreshold.swift; sourceTree = "<group>"; };
@@ -300,6 +312,9 @@
 				8D50E67E11943961E87A65F6 /* Assets.xcassets */,
 				E32C98F3FE145BECC4EC7022 /* Info.plist */,
 				03F65852D76A2EC82ACFC07D /* OpenWorktimeTracker.entitlements */,
+				1A5AAEF5D22A8ED718240DA4 /* taiwan-calendar-2025.json */,
+				C2B4B1A60606B9A536351C11 /* taiwan-calendar-2026.json */,
+				445F96E2D29AE522296A1C66 /* taiwan-calendar-2027.json */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -312,6 +327,7 @@
 				86E9F0E6F30AAE618BE4982D /* CloudSyncManager.swift */,
 				A9C8B5661F461CF5F7351190 /* DailyLogStore.swift */,
 				8316E37B0FE467EDC5CE6E6D /* GlobalShortcutManager.swift */,
+				6EF6C80FE4DE73B81D87133A /* HolidayStore.swift */,
 				587CB7F059336B48B3DEE9CC /* IdleDetector.swift */,
 				F4023084E6F188BEE2079400 /* NotificationManager.swift */,
 				2F26F3D087AB990B78FB7094 /* PersistenceManager.swift */,
@@ -327,6 +343,7 @@
 			children = (
 				D3FBAF5148F3F5E30F02C437 /* BreakCalculatorTests.swift */,
 				B0534E968BFC7EE74714A15B /* DailyLogFormatTests.swift */,
+				9F211E2156CD30DBFA339D6A /* HolidayCalendarTests.swift */,
 				0E368E8701FFBF179A415BBF /* IdleDetectorTests.swift */,
 				A504CCBF9BE58EA9A65A32F7 /* InMemoryDailyLogStore.swift */,
 				4AA9BCF5F1EEE511993757D7 /* ManualClock.swift */,
@@ -378,6 +395,7 @@
 			children = (
 				A3636564F038D5714D3F2E9D /* AppSettings.swift */,
 				BE27F160308976C1903EB127 /* AutoBreakRules.swift */,
+				7170921CADDDA0AC2A3772F3 /* HolidayCalendar.swift */,
 				15F818FB696E0038F88C3B05 /* IdlePeriod.swift */,
 				CA1B7072C1ED5F1279DE5285 /* IdleThreshold.swift */,
 				60165E8E14DF555642684AB7 /* NotificationThresholds.swift */,
@@ -553,6 +571,9 @@
 				D863CFEDBAC6400A74C1551F /* AppIcon.svg in Resources */,
 				3700A1C2970A97914BE1CAF3 /* Assets.xcassets in Resources */,
 				534225F52B177F08D7B9A813 /* Localizable.strings in Resources */,
+				0C2C0AEF3985671EE375AFA1 /* taiwan-calendar-2025.json in Resources */,
+				ABEAA20E94CF9E83BDECCA99 /* taiwan-calendar-2026.json in Resources */,
+				0EB52A16C9F9492F764F768A /* taiwan-calendar-2027.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -565,6 +586,7 @@
 			files = (
 				7F193BB5F12158FB4A228045 /* BreakCalculatorTests.swift in Sources */,
 				E2776F062926941396F6798E /* DailyLogFormatTests.swift in Sources */,
+				3E14285BF4BFC31726ED2024 /* HolidayCalendarTests.swift in Sources */,
 				09742B896CA7EB3ED436018E /* IdleDetectorTests.swift in Sources */,
 				CEF476E22F4EF95B83562444 /* InMemoryDailyLogStore.swift in Sources */,
 				A8E0E039463DA1368A46C035 /* ManualClock.swift in Sources */,
@@ -608,6 +630,8 @@
 				354FD4B54E985FCFDE58ACC3 /* DesignTokens.swift in Sources */,
 				1DC0909035DD8290A96FE10F /* GlassContainer.swift in Sources */,
 				0A9796F1549A59EC38DAE952 /* GlobalShortcutManager.swift in Sources */,
+				DD92DCBD13D8BC4DB0046C20 /* HolidayCalendar.swift in Sources */,
+				F45C32168C71402DC627F782 /* HolidayStore.swift in Sources */,
 				8FDF3B4B103BB741A36E13A7 /* IdleDetector.swift in Sources */,
 				7A4B038D2A8FCAF7D3990342 /* IdlePeriod.swift in Sources */,
 				236FF7EC60B08C2E4B0C9969 /* IdlePromptView.swift in Sources */,
@@ -705,13 +729,13 @@
 				CODE_SIGN_ENTITLEMENTS = WorktimeWidget/WorktimeWidget.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_TEAM = 8WEDM868L3;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = WorktimeWidget/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @executable_path/../../../../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 0.7.5;
+				MARKETING_VERSION = 0.7.6;
 				PRODUCT_BUNDLE_IDENTIFIER = com.openworktimetracker.app.widget;
 				PRODUCT_NAME = WorktimeWidget;
 				SDKROOT = macosx;
@@ -744,7 +768,7 @@
 				CODE_SIGN_ENTITLEMENTS = OpenWorktimeTracker/Resources/OpenWorktimeTracker.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_TEAM = 8WEDM868L3;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = NO;
@@ -754,7 +778,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 0.7.5;
+				MARKETING_VERSION = 0.7.6;
 				PRODUCT_BUNDLE_IDENTIFIER = com.openworktimetracker.app;
 				PRODUCT_NAME = OpenWorktimeTracker;
 				SDKROOT = macosx;
@@ -825,7 +849,7 @@
 				CODE_SIGN_ENTITLEMENTS = OpenWorktimeTracker/Resources/OpenWorktimeTracker.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_TEAM = 8WEDM868L3;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = NO;
@@ -835,7 +859,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 0.7.5;
+				MARKETING_VERSION = 0.7.6;
 				PRODUCT_BUNDLE_IDENTIFIER = com.openworktimetracker.app;
 				PRODUCT_NAME = OpenWorktimeTracker;
 				SDKROOT = macosx;
@@ -867,13 +891,13 @@
 				CODE_SIGN_ENTITLEMENTS = WorktimeWidget/WorktimeWidget.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_TEAM = 8WEDM868L3;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = WorktimeWidget/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @executable_path/../../../../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 0.7.5;
+				MARKETING_VERSION = 0.7.6;
 				PRODUCT_BUNDLE_IDENTIFIER = com.openworktimetracker.app.widget;
 				PRODUCT_NAME = WorktimeWidget;
 				SDKROOT = macosx;

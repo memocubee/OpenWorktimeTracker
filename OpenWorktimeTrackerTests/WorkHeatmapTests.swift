@@ -145,4 +145,26 @@ final class WorkHeatmapTests: XCTestCase {
         XCTAssertEqual(day.level, .excessive)
         XCTAssertEqual(heatmap.stats.workedDays, 1)
     }
+
+    func testHolidaysAreMarkedWhetherWorkedOrStillAhead() throws {
+        let holidays = HolidayCalendar(records: [
+            .init(date: "20260619", isHoliday: true, description: "端午節"),
+            .init(date: "20260925", isHoliday: true, description: "中秋節")
+        ])
+        let heatmap = WorkHeatmap(
+            logs: [log("2026-04-01", hours: 6), log("2026-06-19", hours: 2)], scale: scale, today: today,
+            holidays: holidays)
+        let days = heatmap.weeks.joined()
+
+        let dragonBoat = try XCTUnwrap(days.first { TimeEntry.dateString(from: $0.date) == "2026-06-19" })
+        XCTAssertEqual(dragonBoat.holiday?.name, "端午節")
+        XCTAssertTrue(dragonBoat.isTracked)
+        XCTAssertEqual(dragonBoat.level, .light, "Worked on a holiday keeps its heat level")
+
+        let midAutumn = try XCTUnwrap(heatmap.weeks.last?[5])
+        XCTAssertEqual(midAutumn.holiday?.name, "中秋節")
+        XCTAssertFalse(midAutumn.isTracked, "Still ahead")
+
+        XCTAssertEqual(days.filter { $0.holiday != nil }.count, 2)
+    }
 }

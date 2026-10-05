@@ -67,6 +67,8 @@ struct HeatmapDay: Equatable, Identifiable {
     let log: HeatmapLog?
     let isTracked: Bool
     let level: HeatLevel
+    /// The Public Holiday or make-up day off on this date, if any.
+    var holiday: Holiday?
 
     var id: Date { date }
     var netHours: Double { log?.netHours ?? 0 }
@@ -94,6 +96,7 @@ struct WorkHeatmap {
         scale: HeatScale,
         today: Date,
         weekCount: Int = defaultWeekCount,
+        holidays: HolidayCalendar = .empty,
         calendar baseCalendar: Calendar = .current
     ) {
         var calendar = baseCalendar
@@ -139,7 +142,8 @@ struct WorkHeatmap {
                     date: date,
                     log: log,
                     isTracked: isTracked,
-                    level: scale.level(forHours: log?.netHours ?? 0)
+                    level: scale.level(forHours: log?.netHours ?? 0),
+                    holiday: holidays.holiday(on: dateString)
                 )
                 column.append(day)
                 if isTracked { tracked.append(day) }

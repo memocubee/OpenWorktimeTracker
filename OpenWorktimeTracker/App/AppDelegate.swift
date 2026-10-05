@@ -17,6 +17,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         }
         menuBarController = MenuBarController(manager: workdayManager)
         NSApp.mainMenu = makeMainMenu()
+        // Fetch a year's holiday calendar the bundle doesn't have yet
+        HolidayStore.shared.refreshIfNeeded()
         // Set notification delegate so banners show for this menu bar app
         let notificationCenter = UNUserNotificationCenter.current()
         notificationCenter.delegate = self

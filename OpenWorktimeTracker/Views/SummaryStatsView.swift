@@ -4,6 +4,8 @@ struct SummaryStatsView: View {
     @Environment(WorkdayManager.self) private var manager
     @State private var period: Period = .week
     @State private var entries: [TimeEntry] = []
+    /// Expected Hours for the working days of the period so far.
+    @State private var expected: TimeInterval = 0
 
     enum Period: String, CaseIterable {
         case week
@@ -81,41 +83,33 @@ struct SummaryStatsView: View {
         .onAppear { loadEntries() }
         .onChange(of: period) { _, _ in loadEntries() }
         .onChange(of: manager.logRevision) { _, _ in loadEntries() }
+        .onChange(of: HolidayStore.shared.calendar.years) { _, _ in loadEntries() }
     }
 
     // MARK: - Data Loading
 
+    /// The week runs Monday to Sunday like the week history; both periods end
+    /// on the effective today.
     private func loadEntries() {
-        let all = manager.persistence.loadAll()
-        let calendar = Calendar.current
-        let now = Date()
-
+        let today = WorkdayDetector(newDayStartHour: manager.newDayStartHour)
+            .effectiveDateString(for: manager.clock.now)
+        let start: String?
         switch period {
-        case .week:
-            guard
-                let weekStart = calendar.date(
-                    from: calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: now)
-                )
-            else {
-                entries = []
-                return
-            }
-            entries = all.filter { entry in
-                guard let date = parseDate(entry.date) else { return false }
-                return date >= weekStart && date <= now
-            }
-
-        case .month:
-            let components = calendar.dateComponents([.year, .month], from: now)
-            guard let monthStart = calendar.date(from: components) else {
-                entries = []
-                return
-            }
-            entries = all.filter { entry in
-                guard let date = parseDate(entry.date) else { return false }
-                return date >= monthStart && date <= now
-            }
+        case .week: start = DayString.monday(of: today)
+        case .month: start = String(today.prefix(8)) + "01"
         }
+        guard let start else {
+            entries = []
+            expected = 0
+            return
+        }
+        entries = manager.persistence.loadAll().filter { $0.date >= start && $0.date <= today }
+
+        // Today only owes hours once it has been started
+        let lastOwedDay = entries.contains { $0.date == today } ? today : DayString.adding(-1, to: today) ?? today
+        expected = WorkWeek.expectedHours(
+            from: start, through: lastOwedDay, goalHours: targetHoursPerDay,
+            holidays: HolidayStore.shared.calendar)
     }
 
     // MARK: - Computed Stats
@@ -137,22 +131,15 @@ struct SummaryStatsView: View {
         manager.notificationThresholds.normalHours
     }
 
+    /// Measured against the Expected Hours, so public holidays owe nothing
+    /// and a weekend worked counts in full.
     private var overtimeTime: TimeInterval {
-        totalTime - (Double(workDays) * targetHoursPerDay * 3600)
+        totalTime - expected
     }
 
     private var overtimeFormatted: String {
         let sign = overtimeTime >= 0 ? "+" : "-"
         return sign + abs(overtimeTime).hoursMinutesFormatted
-    }
-
-    // MARK: - Helpers
-
-    private func parseDate(_ dateString: String) -> Date? {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd"
-        formatter.locale = Locale(identifier: "en_US_POSIX")
-        return formatter.date(from: dateString)
     }
 }
 

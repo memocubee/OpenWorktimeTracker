@@ -243,12 +243,12 @@ final class ViewLayoutTests: XCTestCase {
                 try assertLayout(
                     TodayTabView().environment(manager).frame(width: width),
                     name: "today-tab-\(language)-\(dark)", language: language, dark: dark,
-                    bounds: CGSize(width: width, height: 424))
+                    bounds: CGSize(width: width, height: 444))
                 // Records sits between the tab switch and a slim footer
                 try assertLayout(
                     RecordsTabView().environment(manager).frame(width: width),
                     name: "records-tab-\(language)-\(dark)", language: language, dark: dark,
-                    bounds: CGSize(width: width, height: 533))
+                    bounds: CGSize(width: width, height: 553))
             }
         }
     }

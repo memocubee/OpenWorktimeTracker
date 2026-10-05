@@ -63,10 +63,21 @@
 "pauseTotal.error.saveFailed" = "存不進去，檢查紀錄資料夾後再試一次。";
 
 /* WeekHistoryView */
-"history.last7days" = "最近 7 天";
 "history.noData" = "還沒有紀錄";
-"history.total" = "共 %@";
 "history.tooltip.overtime" = "超時 %1$ld 小時 %2$ld 分";
+"week.thisWeek" = "本週";
+"week.lastWeek" = "上週";
+"week.previous" = "上一週";
+"week.next" = "下一週";
+"week.backToThisWeek" = "回到本週";
+"week.workedOfExpected" = "已做 %1$@／應做 %2$@";
+"week.expected.help" = "應做＝%1$ld 個上班日 × %2$@ 小時（國定假日不用上班）";
+"week.remaining" = "還差 %@";
+"week.over" = "超時 +%@";
+"week.short" = "少 %@";
+"week.onTarget" = "達標";
+"week.dayOff" = "放假";
+"week.holiday" = "%1$@（%2$@）%3$@";
 
 /* SummaryStatsView */
 "summary.title" = "統計";
@@ -93,6 +104,7 @@
 "heatmap.legend.upTo" = "≤%@h";
 "heatmap.legend.between" = "%1$@–%2$@h";
 "heatmap.legend.above" = ">%@h";
+"heatmap.legend.holiday" = "假日";
 
 /* IdlePromptView */
 "idle.newWorkday" = "新的一天！";
